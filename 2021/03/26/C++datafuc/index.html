@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>C++关于数据和函数 | Hexo</title>
+  <meta name="description" content="¶C++关于数据和函数 C++关于数据和函数 C语言在设计程序的时候会准备一些数据和函数，函数用来处理你创造的数据，这样会有一些缺点，由于语言没有提供足够的关键字，所以这些数据一定是全局的，所以所有的函数都可以处理这些数据，在后期会造成很大的影响的，所以面向对象语言C++出现了，基本思想是把数据和处理这些数据的函数包装在一起，也就是&amp;ldquo;类&amp;rdquo;，类其实和结构体是差不多的。   类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++关于数据和函数">
+<meta property="og:url" content="http://example.com/2021/03/26/C++datafuc/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="¶C++关于数据和函数 C++关于数据和函数 C语言在设计程序的时候会准备一些数据和函数，函数用来处理你创造的数据，这样会有一些缺点，由于语言没有提供足够的关键字，所以这些数据一定是全局的，所以所有的函数都可以处理这些数据，在后期会造成很大的影响的，所以面向对象语言C++出现了，基本思想是把数据和处理这些数据的函数包装在一起，也就是&amp;ldquo;类&amp;rdquo;，类其实和结构体是差不多的。   类">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210111195119606-1812816107.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210111195754227-2039798270.png">
+<meta property="article:published_time" content="2021-03-26T10:51:03.688Z">
+<meta property="article:modified_time" content="2021-03-26T10:55:26.225Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="C++学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210111195119606-1812816107.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2021/03/26/C++datafuc/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/XQ.github.io/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/Jveilcoo" target="_blank">
+          <img class="img-circle img-rotate" src="/XQ.github.io/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">天色渐淡</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">EVERYTHING WILL BE OK!</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hunan, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/XQ.github.io/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/XQ.github.io/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/XQ.github.io/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/XQ.github.io/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/XQ.github.io/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Jveilcoo" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/XQ.github.io/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/C/">C++</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E6%AF%8F%E6%97%A5%E6%89%93%E5%8D%A1/">每日打卡</a><span class="category-list-count">15</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/C-%E5%AD%A6%E4%B9%A0/" rel="tag">C++学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/Eigen/" rel="tag">Eigen</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/Leetcode%E9%A2%98%E8%A7%A3/" rel="tag">Leetcode题解</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/%E6%A6%82%E5%BF%B5%E7%9F%A5%E8%AF%86/" rel="tag">概念知识</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" rel="tag">线性代数</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/XQ.github.io/tags/C-%E5%AD%A6%E4%B9%A0/" style="font-size: 13.67px;">C++学习</a> <a href="/XQ.github.io/tags/Eigen/" style="font-size: 13.33px;">Eigen</a> <a href="/XQ.github.io/tags/Leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 14px;">Leetcode题解</a> <a href="/XQ.github.io/tags/%E6%A6%82%E5%BF%B5%E7%9F%A5%E8%AF%86/" style="font-size: 13px;">概念知识</a> <a href="/XQ.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" style="font-size: 13.33px;">线性代数</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/XQ.github.io/archives/2021/03/">三月 2021</a><span class="archive-list-count">33</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/graphics1/" class="title">graphics pipeline - 图形管线</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:18:01.301Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/C/">C++</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/Eigen2/" class="title">Eigen:Matrix and Vector arithmetic</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:12:15.866Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/C/">C++</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/Eigen1/" class="title">Eigen:The Matrix Class</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:05:43.527Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/lial2/" class="title">线性代数及其应用(二)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:00:38.711Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/lial1/" class="title">线性代数及其应用(一)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T10:58:34.458Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#C-%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%92%8C%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">C++关于数据和函数</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-C++datafuc" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++关于数据和函数
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/XQ.github.io/2021/03/26/C++datafuc/" class="article-date">
+	  <time datetime="2021-03-26T10:51:03.688Z" itemprop="datePublished">2021-03-26</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/XQ.github.io/categories/C/">C++</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/XQ.github.io/tags/C-%E5%AD%A6%E4%B9%A0/" rel="tag">C++学习</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/XQ.github.io/2021/03/26/C++datafuc/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="C-关于数据和函数"><a class="header-anchor" href="#C-关于数据和函数">¶</a>C++关于数据和函数</h2>
+<p><span style="color: #000000; font-size: 14pt;">C++关于数据和函数</span></p>
+<p>C语言在设计程序的时候会准备一些数据和函数，函数用来处理你创造的数据，这样会有一些缺点，由于语言没有提供足够的关键字，所以这些数据一定是全局的，所以所有的函数都可以处理这些数据，在后期会造成很大的影响的，所以面向对象语言C++出现了，基本思想是把数据和处理这些数据的函数包装在一起，也就是&ldquo;类&rdquo;，类其实和结构体是差不多的。</p>
+<p><img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210111195119606-1812816107.png" alt="" loading="lazy" /></p>
+<hr>
+<p>类是否涉及指针，一定要特别注意</p>
+<p>Class 的 两个经典分类：</p>
+<p>&middot;Class without pointer member(s)</p>
+<p>&middot;Class with pointer member(s)</p>
+<hr>
+<p><span style="font-size: 14pt;">C++ program 代码基本形式</span></p>
+<p>&nbsp;</p>
+<p><img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210111195754227-2039798270.png" alt="" loading="lazy" /></p>
+<hr>
+<p>&nbsp;.h 头文件 与 .cpp 代码程序</p>
+<p>用#include的方法使用头文件，标准库也是类似。</p>
+<p>使用自己的写的头文件使用双引号"",默认库使用尖括号&lt;&gt;</p>
+<p>延伸文件名不一定是.h或.cpp</p>
+<p>也可能是.hpp甚至是无延伸名</p>
+<p>在不同的平台上可能不同。</p>
+<p>Header头文件中的防卫式声明</p>
+<p>#ifndef _XXX_&nbsp; &nbsp; &nbsp; &nbsp;//if not define 如果没有被定义（引用）过</p>
+<p>#define _XXX_&nbsp; &nbsp; &nbsp; //则执行下列代码直到#endif</p>
+<p>...</p>
+<p>...</p>
+<p>#endif&nbsp; //若第一行判定被定义过，则直接跳到#endif</p>
+<p>作用是避免多重调用,出现重定义错误！</p>
+<hr>
+<p>比如 我在 Main.cpp 中&nbsp;</p>
+<div class="cnblogs_code">
+<pre>#include<span style="color: #800000;">"</span><span style="color: #800000;">op1.h</span><span style="color: #800000;">"</span><span style="color: #000000;">
+#include</span><span style="color: #800000;">"</span><span style="color: #800000;">op2.h</span><span style="color: #800000;">"</span><span style="color: #000000;">
+...
+...
+...</span></pre>
+</div>
+<p>而在op2.h中</p>
+<div class="cnblogs_code">
+<pre>#include<span style="color: #800000;">"</span><span style="color: #800000;">op1.h</span><span style="color: #800000;">"</span><span style="color: #000000;">
+...
+...
+...</span></pre>
+</div>
+<p>&nbsp;这样就形成了多重调用，因为op2.h中包含了op1.h，而在Main.cpp中既调用了op2.h也调用了op1.h。</p>
+<p>&nbsp;<span style="color: #ff0000;">所以要养成写任何一个头文件都要使用#ifndef来避免重定义的习惯。</span></p>
+<hr>
+<p>既然有 #ifndef ，所以也有#ifdef</p>
+<p>当在不同平台下编写代码时，由于环境不同，所以要使用的头文件也会不同，这时就可以用到#ifdef</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> OS_Win</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> OS_Linux</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>这样就实现了windows环境下调用windows.h 而Linux环境下则调用linux.h。</p>
+<p>Class 的声明（拿complex来举例）：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">complex</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">   <span class="built_in">complex</span> (<span class="keyword">double</span> r = <span class="number">0</span> , <span class="keyword">double</span> i = <span class="number">0</span> ) <span class="comment">//构造函数</span></span><br><span class="line">    : <span class="built_in">re</span>(r),<span class="built_in">im</span>(i)</span><br><span class="line">   &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    complex&amp; <span class="keyword">operator</span> += (<span class="keyword">const</span> complex&amp;); <span class="comment">//重载+=</span></span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">real</span><span class="params">()</span> <span class="keyword">const</span></span>&#123;<span class="keyword">return</span> re;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">imag</span><span class="params">()</span> <span class="keyword">const</span></span>&#123;<span class="keyword">return</span> im;&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">double</span> re,im;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>public: 下的函数或者数据都是可以直接给外界访问的，而private：下的函数或数据只能内部访问。实现数据与函数封装。</p>
+<hr>
+<p>class template(模板）</p>
+<p>当你使用大量同一种数据类型的变量的时候，突然想改变这些变量的数据类型，那么一条一条代码去改是很难实现的，就比如上面有变量re和im，我想同时改变它们两个的数据类型，首先是变量声明那改成另一种数据类型，但是还有相关函数呢，返回的也是double类型，也需要更改，而且构造函数中传入的参数也是double类型，几乎所有地方都要修改，这样就显得极其麻烦，而且如果想通过不同的情况随时更改无法实现，灵活性也极差。</p>
+<p>那么就使用到了&ldquo;模板&rdquo;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">complex</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">   <span class="built_in">complex</span> (T r = <span class="number">0</span> , T = <span class="number">0</span> ) <span class="comment">//构造函数</span></span><br><span class="line">    : <span class="built_in">re</span>(r),<span class="built_in">im</span>(i)</span><br><span class="line">   &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    complex&amp; <span class="keyword">operator</span> += (<span class="keyword">const</span> complex&amp;); <span class="comment">//重载+=</span></span><br><span class="line">    <span class="function">T <span class="title">real</span><span class="params">()</span> <span class="keyword">const</span></span>&#123;<span class="keyword">return</span> re;&#125;</span><br><span class="line">    <span class="function">T <span class="title">imag</span><span class="params">()</span> <span class="keyword">const</span></span>&#123;<span class="keyword">return</span> im;&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    T re;</span><br><span class="line">    T im;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line">...主函数...</span><br><span class="line">&#123;</span><br><span class="line">    <span class="function">complex&lt;<span class="keyword">double</span>&gt; <span class="title">c1</span><span class="params">(<span class="number">2.5</span>,<span class="number">1.5</span>)</span></span>;</span><br><span class="line">    <span class="function">complex&lt;<span class="keyword">int</span>&gt; <span class="title">c1</span><span class="params">(<span class="number">1</span>,<span class="number">2</span>)</span></span>;</span><br><span class="line">    ... </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就想使用double类型就用double模板，使用int类型就用int模板。灵活性强。</p>
+<hr>
+<p>关于 避免头文件重定义的补充：</p>
+<p>我们已经知道一种方法 #ifndef</p>
+<p>还有一种方法是 #pragma once</p>
+<p>那么这两种方法有什么区别呢？</p>
+<p>#ifndef 因为要定义宏名，如果出现两个头文件定义的宏名相同的话，可能会导致使用该头文件，但编译器找不到。</p>
+<p>#pragma once则由编译器提供保证：同一个文件不会被包含多次。且这个文件是物理上的文件，缺点是如果物理文件被拷贝多次会导致无法避免重定义，且不支持跨平台。</p>
+<hr>
+<p>所以两种方法的使用需要根据情况来把握。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2021/03/26/C++datafuc/" title="C++关于数据和函数" target="_blank" rel="external">http://example.com/2021/03/26/C++datafuc/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/Jveilcoo" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/XQ.github.io/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/Jveilcoo" target="_blank"><span class="text-dark">天色渐淡</span><small class="ml-1x">EVERYTHING WILL BE OK!</small></a></h3>
+        <div>和相同的人，一起去观赏不同的远方</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/XQ.github.io/2021/03/26/lial1/" title="线性代数及其应用(一)"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/XQ.github.io/2021/03/26/C++opcz/" title="C++ 重载"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/XQ.github.io/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/XQ.github.io/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Jveilcoo" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/XQ.github.io/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/XQ.github.io/js/plugin.min.js"></script>
+
+
+<script src="/XQ.github.io/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/XQ.github.io/',
+        CONTENT_URL: '/XQ.github.io/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/XQ.github.io/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

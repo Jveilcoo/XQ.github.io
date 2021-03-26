@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>C++组合与继承 | Hexo</title>
+  <meta name="description" content="¶C++组合与继承 组合与继承 Composition(复合)，表示has-a复合关系简单来说，就是一个类中有另外一个类，A类中需要实现的东西，完全可以由B类中的方法来实现的话，就不需要在A类中去写，而直接去调用B类中的方法就行了。 12345678910111213template &lt;class T, class Sequence &#x3D; deque&lt;T&gt;&gt;class que">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++组合与继承">
+<meta property="og:url" content="http://example.com/2021/03/26/C++zuhejicheng/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="¶C++组合与继承 组合与继承 Composition(复合)，表示has-a复合关系简单来说，就是一个类中有另外一个类，A类中需要实现的东西，完全可以由B类中的方法来实现的话，就不需要在A类中去写，而直接去调用B类中的方法就行了。 12345678910111213template &lt;class T, class Sequence &#x3D; deque&lt;T&gt;&gt;class que">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114110805972-646031218.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114110929461-942601926.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114110901434-1450263716.png">
+<meta property="article:published_time" content="2021-03-26T08:55:49.033Z">
+<meta property="article:modified_time" content="2021-03-26T08:59:18.739Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="C++学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114110805972-646031218.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2021/03/26/C++zuhejicheng/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/XQ.github.io/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/Jveilcoo" target="_blank">
+          <img class="img-circle img-rotate" src="/XQ.github.io/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">天色渐淡</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">EVERYTHING WILL BE OK!</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hunan, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/XQ.github.io/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/XQ.github.io/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/XQ.github.io/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/XQ.github.io/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/XQ.github.io/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Jveilcoo" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/XQ.github.io/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/C/">C++</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E6%AF%8F%E6%97%A5%E6%89%93%E5%8D%A1/">每日打卡</a><span class="category-list-count">15</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/C-%E5%AD%A6%E4%B9%A0/" rel="tag">C++学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/Eigen/" rel="tag">Eigen</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/Leetcode%E9%A2%98%E8%A7%A3/" rel="tag">Leetcode题解</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/%E6%A6%82%E5%BF%B5%E7%9F%A5%E8%AF%86/" rel="tag">概念知识</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" rel="tag">线性代数</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/XQ.github.io/tags/C-%E5%AD%A6%E4%B9%A0/" style="font-size: 13.67px;">C++学习</a> <a href="/XQ.github.io/tags/Eigen/" style="font-size: 13.33px;">Eigen</a> <a href="/XQ.github.io/tags/Leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 14px;">Leetcode题解</a> <a href="/XQ.github.io/tags/%E6%A6%82%E5%BF%B5%E7%9F%A5%E8%AF%86/" style="font-size: 13px;">概念知识</a> <a href="/XQ.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" style="font-size: 13.33px;">线性代数</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/XQ.github.io/archives/2021/03/">三月 2021</a><span class="archive-list-count">33</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/graphics1/" class="title">graphics pipeline - 图形管线</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:18:01.301Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/C/">C++</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/Eigen2/" class="title">Eigen:Matrix and Vector arithmetic</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:12:15.866Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/C/">C++</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/Eigen1/" class="title">Eigen:The Matrix Class</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:05:43.527Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/lial2/" class="title">线性代数及其应用(二)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:00:38.711Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/lial1/" class="title">线性代数及其应用(一)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T10:58:34.458Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#C-%E7%BB%84%E5%90%88%E4%B8%8E%E7%BB%A7%E6%89%BF"><span class="toc-number">1.</span> <span class="toc-text">C++组合与继承</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#code%EF%BF%BC2"><span class="toc-number">2.</span> <span class="toc-text">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+&#x2F;&#x2F;file String.hpp
+class StringRep;
+class String&amp;#123;
+public:
+String();
+String(const char * s);
+String(const String&amp; s);
+String &amp;operator &#x3D; (const String&amp; s);
+~String();
+....
+private:
+StringRep * rep; 
+&amp;#125;;
+</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-C++zuhejicheng" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++组合与继承
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/XQ.github.io/2021/03/26/C++zuhejicheng/" class="article-date">
+	  <time datetime="2021-03-26T08:55:49.033Z" itemprop="datePublished">2021-03-26</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/XQ.github.io/categories/C/">C++</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/XQ.github.io/tags/C-%E5%AD%A6%E4%B9%A0/" rel="tag">C++学习</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/XQ.github.io/2021/03/26/C++zuhejicheng/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="C-组合与继承"><a class="header-anchor" href="#C-组合与继承">¶</a>C++组合与继承</h2>
+<p>组合与继承</p>
+<p>Composition(复合)，表示has-a<br />复合关系简单来说，就是一个类中有另外一个类，A类中需要实现的东西，完全可以由B类中的方法来实现的话，就不需要在A类中去写，而直接去调用B类中的方法就行了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>, <span class="keyword">class</span> <span class="title">Sequence</span> =</span> deque&lt;T&gt;&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">queue</span>&#123;</span></span><br><span class="line">...</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">sequence c; <span class="comment">//底层容器</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;<span class="keyword">return</span> c.<span class="built_in">empty</span>();&#125;</span><br><span class="line"><span class="function">size_type <span class="title">size</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;<span class="keyword">return</span> c.<span class="built_in">size</span>();&#125;</span><br><span class="line"><span class="function">reference <span class="title">front</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> c.<span class="built_in">front</span>();&#125;</span><br><span class="line"><span class="function">reference <span class="title">back</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> c.<span class="built_in">back</span>();&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">const</span> value_type&amp; x)</span> </span>&#123;c.<span class="built_in">push_back</span>(x);&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;c.<span class="built_in">pop_front</span>();&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>因为单向队列类queue中的一些操作完全可以由双端队列类deque中的方法去实现，所以可以在queue类中直接加入底层容器去调用deque中的方法，而不是自己实现，这就是复合。</p>
+<hr>
+<p>内存关系：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">queue</span>&#123;</span></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">deque&lt;T&gt; c;</span><br><span class="line">...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">deque</span>&#123;</span></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">Itr&lt;T&gt; start;</span><br><span class="line">Itr&lt;T&gt; finish;</span><br><span class="line">T** map;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> map_size;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Itr</span>&#123;</span></span><br><span class="line">T* cur;</span><br><span class="line">T* first;</span><br><span class="line">T* last;</span><br><span class="line">T** node;</span><br><span class="line">....</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>算内存，由内而外，首先看结构体Itr，一个指针4字节，所以sizeof(Itr) = 4*4 =16<br />然后在 class deque中，有两个Itr结构体 加一个指针变量一个整形变量，所以sizeof(deque) = 16 * 2 + 4 + 4 = 40;<br />同理，所以sizeof(queue) = 40;</p>
+<p>Composition(复合)关系下的构造和析构</p>
+<p><img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114110805972-646031218.png" alt="" loading="lazy" /></p>
+<hr>
+<p>构造由内而外<br />Container 的构造函数首先调用 Component 的 default 构造函数，然后才执行自己。</p>
+<div class="cnblogs_code">
+<pre>Container::Container(...): Component() {...}; <span style="color: #008000;">//</span><span style="color: #008000;">因为Component的构造函数可能不止一个，编译器不知道调用哪个，所以只会调用缺省构造函数，除非自己指定参数。</span></pre>
+</div>
+<p>析构由外而内<br />Container 的析构函数首先执行自己，然后才调用Component的析构函数</p>
+<div class="cnblogs_code">
+<pre>Container::~Container(...){... ~Component()};</pre>
+</div>
+<p>组装都是由内而外的，拆开肯定只能由外而内。</p>
+<p><br />Delegation(委托).Composition by reference;<br />委托其实跟复合很像，说实在点也就是定义上有点区别。<br />不过委托就是Composition(复合) by reference，看这个应该就能明白了。</p>
+<hr>
+<h2 id="code￼2"><a class="header-anchor" href="#code￼2">¶</a><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//file String.hpp</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StringRep</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">String</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="built_in">String</span>();</span><br><span class="line"><span class="built_in">String</span>(<span class="keyword">const</span> <span class="keyword">char</span> * s);</span><br><span class="line"><span class="built_in">String</span>(<span class="keyword">const</span> String&amp; s);</span><br><span class="line">String &amp;<span class="keyword">operator</span> = (<span class="keyword">const</span> String&amp; s);</span><br><span class="line">~<span class="built_in">String</span>();</span><br><span class="line">....</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">StringRep * rep; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//file String.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;String.hpp&quot;</span></span></span><br><span class="line"><span class="keyword">namespace</span> &#123;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StringRep</span>&#123;</span></span><br><span class="line"><span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">String</span>;</span></span><br><span class="line"><span class="built_in">StringRep</span>(<span class="keyword">const</span> <span class="keyword">char</span> * s);</span><br><span class="line">~<span class="built_in">StringRep</span>();</span><br><span class="line"><span class="keyword">int</span> count;</span><br><span class="line"><span class="keyword">char</span> * rep;</span><br><span class="line">&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">String::<span class="built_in">String</span>()&#123;...&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>通过调用 StringRep指针来获取到字符串"Hello"，通过下图就很明显能够看出。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;<img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114110929461-942601926.png" alt="" loading="lazy" /></p>
+<hr>
+<p><br />这种模式的优点就是无论你怎么修改StringRep 对客户所需要看到的Hello都不影响，甚至可以更换委托对象。维护和更新起来特别方便。<br />可以说这两者之间就是 Handle 与 Body 的关系。</p>
+<p>Inheritance(继承) ,表示is-a</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">struct</span><span style="color: #000000;"> _List_node_base
+{
+_List_node_base</span>*<span style="color: #000000;"> _M_next;
+_List_node_base</span>*<span style="color: #000000;"> _M_prev;
+};
+<p>template</span>&lt;typename _Tp&gt;<br>
+<span style="color: #0000ff;">struct</span><span style="color: #000000;"> _List_node<br>
+:</span><span style="color: #0000ff;">public</span><span style="color: #000000;"> _List_node_base<br>
+{<br>
+_Tp _M_data;<br>
+};</span></pre></p>
+</div>
+<hr>
+<p>语法上继承有3种方法，最常用的就是 :public ...<br />其实struct和class是非常相似的，所以这里拿struct举例，继承是is-a的关系<br />继承在面向对象中的概念来说，就是父类与子类，比如说人类分男人，女人，人类是父类，男人与女人是子类。<br />拥有父类-人类的属性的同时，多了自己的属性。</p>
+<p>构造由内而外</p>
+<p><img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114110901434-1450263716.png" alt="" loading="lazy" /></p>
+<hr>
+<p><br />Derived 的构造函数首先调用Base的 default 构造函数，然后才执行自己。</p>
+<div class="cnblogs_code">
+<pre>Deruved::Derived(...) : Base() {...};</pre>
+</div>
+<p>析构由外而内<br />Derived 的析构函数首先执行自己，然后才调用Base的析构函数。</p>
+<div class="cnblogs_code">
+<pre>Derived::~Derived(...){...~Base()};</pre>
+</div>
+<hr>
+<p>注意：base class 的 dtor必须是virtual,否则会出现 undefined behaviod<br />养成习惯，每当创建的类有可能会作为基类衍生子类时，最好把这个类的析构函数设为虚函数(virtual)</p>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2021/03/26/C++zuhejicheng/" title="C++组合与继承" target="_blank" rel="external">http://example.com/2021/03/26/C++zuhejicheng/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/Jveilcoo" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/XQ.github.io/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/Jveilcoo" target="_blank"><span class="text-dark">天色渐淡</span><small class="ml-1x">EVERYTHING WILL BE OK!</small></a></h3>
+        <div>和相同的人，一起去观赏不同的远方</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/XQ.github.io/2021/03/26/C++refer/" title="C++引用小结"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/XQ.github.io/2021/03/26/C++vir2/" title="C++虚函数与多态"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/XQ.github.io/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/XQ.github.io/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Jveilcoo" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/XQ.github.io/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/XQ.github.io/js/plugin.min.js"></script>
+
+
+<script src="/XQ.github.io/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/XQ.github.io/',
+        CONTENT_URL: '/XQ.github.io/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/XQ.github.io/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

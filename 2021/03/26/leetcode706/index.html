@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Leetcode每日一题 706.设计哈希映射 | Hexo</title>
+  <meta name="description" content="706. 设计哈希映射   不使用任何内建的哈希表库设计一个哈希映射（HashMap）。 实现&amp;nbsp;MyHashMap&amp;nbsp;类：  MyHashMap()&amp;nbsp;用空映射初始化对象 void put(int key, int value)&amp;nbsp;向 HashMap 插入一个键值对&amp;nbsp;(key, value)&amp;nbsp;。如果&amp;nbsp;key&amp;nbsp;已经存在于映射中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leetcode每日一题 706.设计哈希映射">
+<meta property="og:url" content="http://example.com/2021/03/26/leetcode706/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="706. 设计哈希映射   不使用任何内建的哈希表库设计一个哈希映射（HashMap）。 实现&amp;nbsp;MyHashMap&amp;nbsp;类：  MyHashMap()&amp;nbsp;用空映射初始化对象 void put(int key, int value)&amp;nbsp;向 HashMap 插入一个键值对&amp;nbsp;(key, value)&amp;nbsp;。如果&amp;nbsp;key&amp;nbsp;已经存在于映射中">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-26T08:00:48.488Z">
+<meta property="article:modified_time" content="2021-03-26T08:02:27.139Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Leetcode题解">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2021/03/26/leetcode706/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/XQ.github.io/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/Jveilcoo" target="_blank">
+          <img class="img-circle img-rotate" src="/XQ.github.io/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">天色渐淡</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">EVERYTHING WILL BE OK!</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hunan, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/XQ.github.io/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/XQ.github.io/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/XQ.github.io/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/XQ.github.io/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/XQ.github.io/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Jveilcoo" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/XQ.github.io/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/C/">C++</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E6%AF%8F%E6%97%A5%E6%89%93%E5%8D%A1/">每日打卡</a><span class="category-list-count">15</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/C-%E5%AD%A6%E4%B9%A0/" rel="tag">C++学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/Eigen/" rel="tag">Eigen</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/Leetcode%E9%A2%98%E8%A7%A3/" rel="tag">Leetcode题解</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/%E6%A6%82%E5%BF%B5%E7%9F%A5%E8%AF%86/" rel="tag">概念知识</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" rel="tag">线性代数</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/XQ.github.io/tags/C-%E5%AD%A6%E4%B9%A0/" style="font-size: 13.67px;">C++学习</a> <a href="/XQ.github.io/tags/Eigen/" style="font-size: 13.33px;">Eigen</a> <a href="/XQ.github.io/tags/Leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 14px;">Leetcode题解</a> <a href="/XQ.github.io/tags/%E6%A6%82%E5%BF%B5%E7%9F%A5%E8%AF%86/" style="font-size: 13px;">概念知识</a> <a href="/XQ.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" style="font-size: 13.33px;">线性代数</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/XQ.github.io/archives/2021/03/">三月 2021</a><span class="archive-list-count">33</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/graphics1/" class="title">graphics pipeline - 图形管线</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:18:01.301Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/C/">C++</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/Eigen2/" class="title">Eigen:Matrix and Vector arithmetic</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:12:15.866Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/C/">C++</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/Eigen1/" class="title">Eigen:The Matrix Class</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:05:43.527Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/lial2/" class="title">线性代数及其应用(二)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:00:38.711Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/lial1/" class="title">线性代数及其应用(一)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T10:58:34.458Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">706. 设计哈希映射</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-leetcode706" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Leetcode每日一题 706.设计哈希映射
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/XQ.github.io/2021/03/26/leetcode706/" class="article-date">
+	  <time datetime="2021-03-26T08:00:48.488Z" itemprop="datePublished">2021-03-26</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/XQ.github.io/categories/%E6%AF%8F%E6%97%A5%E6%89%93%E5%8D%A1/">每日打卡</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/XQ.github.io/tags/Leetcode%E9%A2%98%E8%A7%A3/" rel="tag">Leetcode题解</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/XQ.github.io/2021/03/26/leetcode706/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h4 class="css-10c1h40-Title eugt34i1" data-cypress="QuestionTitle"><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/design-hashmap/">706. 设计哈希映射</a></h4>
+<div class="content__1Y2H">
+<div class="notranslate">
+<p>不使用任何内建的哈希表库设计一个哈希映射（HashMap）。</p>
+<p>实现&nbsp;<code>MyHashMap</code>&nbsp;类：</p>
+<ul>
+<li><code>MyHashMap()</code>&nbsp;用空映射初始化对象</li>
+<li><code>void put(int key, int value)</code>&nbsp;向 HashMap 插入一个键值对&nbsp;<code>(key, value)</code>&nbsp;。如果&nbsp;<code>key</code>&nbsp;已经存在于映射中，则更新其对应的值&nbsp;<code>value</code>&nbsp;。</li>
+<li><code>int get(int key)</code>&nbsp;返回特定的&nbsp;<code>key</code>&nbsp;所映射的&nbsp;<code>value</code>&nbsp;；如果映射中不包含&nbsp;<code>key</code>&nbsp;的映射，返回&nbsp;<code>-1</code>&nbsp;。</li>
+<li><code>void remove(key)</code>&nbsp;如果映射中存在&nbsp;<code>key</code>&nbsp;的映射，则移除&nbsp;<code>key</code>&nbsp;和它所对应的&nbsp;<code>value</code>&nbsp;。</li>
+</ul>
+<p>示例：</p>
+输入：
+<div class="cnblogs_code">
+<pre>[<span style="color: #800000;">"</span><span style="color: #800000;">MyHashMap</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">put</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">put</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">get</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">get</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">put</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">get</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">remove</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">get</span><span style="color: #800000;">"</span><span style="color: #000000;">]
+[[], [</span><span style="color: #800080;">1</span>, <span style="color: #800080;">1</span>], [<span style="color: #800080;">2</span>, <span style="color: #800080;">2</span>], [<span style="color: #800080;">1</span>], [<span style="color: #800080;">3</span>], [<span style="color: #800080;">2</span>, <span style="color: #800080;">1</span>], [<span style="color: #800080;">2</span>], [<span style="color: #800080;">2</span>], [<span style="color: #800080;">2</span>]]</pre>
+</div>
+输出：
+<div class="cnblogs_code">
+<pre>[<span style="color: #0000ff;">null</span>, <span style="color: #0000ff;">null</span>, <span style="color: #0000ff;">null</span>, <span style="color: #800080;">1</span>, -<span style="color: #800080;">1</span>, <span style="color: #0000ff;">null</span>, <span style="color: #800080;">1</span>, <span style="color: #0000ff;">null</span>, -<span style="color: #800080;">1</span>]</pre>
+</div>
+<pre>解释：
+MyHashMap myHashMap = new MyHashMap();
+myHashMap.put(1, 1); // myHashMap 现在为 [[1,1]]
+myHashMap.put(2, 2); // myHashMap 现在为 [[1,1], [2,2]]
+myHashMap.get(1);    // 返回 1 ，myHashMap 现在为 [[1,1], [2,2]]
+myHashMap.get(3);    // 返回 -1（未找到），myHashMap 现在为 [[1,1], [2,2]]
+myHashMap.put(2, 1); // myHashMap 现在为 [[1,1], [2,1]]（更新已有的值）
+myHashMap.get(2);    // 返回 1 ，myHashMap 现在为 [[1,1], [2,1]]
+myHashMap.remove(2); // 删除键为 2 的数据，myHashMap 现在为 [[1,1]]
+myHashMap.get(2);    // 返回 -1（未找到），myHashMap 现在为 [[1,1]]<br /><br /></pre>
+<hr>
+<p>代码:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyHashMap</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/** Initialize your data structure here. */</span></span><br><span class="line">    <span class="keyword">int</span> hashmap[<span class="number">1000009</span>];</span><br><span class="line">    <span class="built_in">MyHashMap</span>() &#123;</span><br><span class="line">        <span class="built_in">memset</span>(hashmap,<span class="number">-1</span>,<span class="built_in"><span class="keyword">sizeof</span></span>(hashmap));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** value will always be non-negative. */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">put</span><span class="params">(<span class="keyword">int</span> key, <span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        hashmap[key] = value;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> hashmap[key];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Removes the mapping of the specified value key if this map contains a mapping for the key */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">remove</span><span class="params">(<span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        hashmap[key] = <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your MyHashMap object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * MyHashMap* obj = new MyHashMap();</span></span><br><span class="line"><span class="comment"> * obj-&gt;put(key,value);</span></span><br><span class="line"><span class="comment"> * int param_2 = obj-&gt;get(key);</span></span><br><span class="line"><span class="comment"> * obj-&gt;remove(key);</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2021/03/26/leetcode706/" title="Leetcode每日一题 706.设计哈希映射" target="_blank" rel="external">http://example.com/2021/03/26/leetcode706/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/Jveilcoo" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/XQ.github.io/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/Jveilcoo" target="_blank"><span class="text-dark">天色渐淡</span><small class="ml-1x">EVERYTHING WILL BE OK!</small></a></h3>
+        <div>和相同的人，一起去观赏不同的远方</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/XQ.github.io/2021/03/26/leetcode54/" title="Leetcode每日一题 54.螺旋矩阵"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/XQ.github.io/2021/03/26/leetcode705/" title="Leetcode每日一题 705.设计哈希集合"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/XQ.github.io/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/XQ.github.io/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Jveilcoo" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/XQ.github.io/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/XQ.github.io/js/plugin.min.js"></script>
+
+
+<script src="/XQ.github.io/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/XQ.github.io/',
+        CONTENT_URL: '/XQ.github.io/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/XQ.github.io/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

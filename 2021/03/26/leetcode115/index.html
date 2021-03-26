@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Leetcode每日一题 115.不同的子序列 | Hexo</title>
+  <meta name="description" content="115. 不同的子序列   给定一个字符串&amp;nbsp;s&amp;nbsp;和一个字符串&amp;nbsp;t&amp;nbsp;，计算在&amp;nbsp;s&amp;nbsp;的子序列中&amp;nbsp;t&amp;nbsp;出现的个数。 字符串的一个&amp;nbsp;子序列&amp;nbsp;是指，通过删除一些（也可以不删除）字符且不干扰剩余字符相对位置所组成的新字符串。（例如，&quot;ACE&quot;&amp;nbsp;是&amp;nbsp;&quot;ABCDE&quot;&amp;nbsp;的一个子序列，而&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leetcode每日一题 115.不同的子序列">
+<meta property="og:url" content="http://example.com/2021/03/26/leetcode115/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="115. 不同的子序列   给定一个字符串&amp;nbsp;s&amp;nbsp;和一个字符串&amp;nbsp;t&amp;nbsp;，计算在&amp;nbsp;s&amp;nbsp;的子序列中&amp;nbsp;t&amp;nbsp;出现的个数。 字符串的一个&amp;nbsp;子序列&amp;nbsp;是指，通过删除一些（也可以不删除）字符且不干扰剩余字符相对位置所组成的新字符串。（例如，&quot;ACE&quot;&amp;nbsp;是&amp;nbsp;&quot;ABCDE&quot;&amp;nbsp;的一个子序列，而&amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-26T08:08:53.862Z">
+<meta property="article:modified_time" content="2021-03-26T08:12:44.348Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Leetcode题解">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2021/03/26/leetcode115/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/XQ.github.io/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/Jveilcoo" target="_blank">
+          <img class="img-circle img-rotate" src="/XQ.github.io/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">天色渐淡</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">EVERYTHING WILL BE OK!</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hunan, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/XQ.github.io/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/XQ.github.io/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/XQ.github.io/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/XQ.github.io/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/XQ.github.io/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Jveilcoo" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/XQ.github.io/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/C/">C++</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E6%AF%8F%E6%97%A5%E6%89%93%E5%8D%A1/">每日打卡</a><span class="category-list-count">15</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/C-%E5%AD%A6%E4%B9%A0/" rel="tag">C++学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/Eigen/" rel="tag">Eigen</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/Leetcode%E9%A2%98%E8%A7%A3/" rel="tag">Leetcode题解</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/%E6%A6%82%E5%BF%B5%E7%9F%A5%E8%AF%86/" rel="tag">概念知识</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" rel="tag">线性代数</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/XQ.github.io/tags/C-%E5%AD%A6%E4%B9%A0/" style="font-size: 13.67px;">C++学习</a> <a href="/XQ.github.io/tags/Eigen/" style="font-size: 13.33px;">Eigen</a> <a href="/XQ.github.io/tags/Leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 14px;">Leetcode题解</a> <a href="/XQ.github.io/tags/%E6%A6%82%E5%BF%B5%E7%9F%A5%E8%AF%86/" style="font-size: 13px;">概念知识</a> <a href="/XQ.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" style="font-size: 13.33px;">线性代数</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/XQ.github.io/archives/2021/03/">三月 2021</a><span class="archive-list-count">33</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/graphics1/" class="title">graphics pipeline - 图形管线</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:18:01.301Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/C/">C++</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/Eigen2/" class="title">Eigen:Matrix and Vector arithmetic</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:12:15.866Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/C/">C++</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/Eigen1/" class="title">Eigen:The Matrix Class</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:05:43.527Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/lial2/" class="title">线性代数及其应用(二)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:00:38.711Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/lial1/" class="title">线性代数及其应用(一)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T10:58:34.458Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-leetcode115" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Leetcode每日一题 115.不同的子序列
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/XQ.github.io/2021/03/26/leetcode115/" class="article-date">
+	  <time datetime="2021-03-26T08:08:53.862Z" itemprop="datePublished">2021-03-26</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/XQ.github.io/categories/%E6%AF%8F%E6%97%A5%E6%89%93%E5%8D%A1/">每日打卡</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/XQ.github.io/tags/Leetcode%E9%A2%98%E8%A7%A3/" rel="tag">Leetcode题解</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/XQ.github.io/2021/03/26/leetcode115/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/distinct-subsequences/">115. 不同的子序列</a></p>
+<div class="content__1Y2H">
+<div class="notranslate">
+<p>给定一个字符串&nbsp;<code>s</code>&nbsp;和一个字符串&nbsp;<code>t</code>&nbsp;，计算在&nbsp;<code>s</code>&nbsp;的子序列中&nbsp;<code>t</code>&nbsp;出现的个数。</p>
+<p>字符串的一个&nbsp;子序列&nbsp;是指，通过删除一些（也可以不删除）字符且不干扰剩余字符相对位置所组成的新字符串。（例如，<code>"ACE"</code>&nbsp;是&nbsp;<code>"ABCDE"</code>&nbsp;的一个子序列，而&nbsp;<code>"AEC"</code>&nbsp;不是）</p>
+<p>题目数据保证答案符合 32 位带符号整数范围。</p>
+<p>示例&nbsp;1：</p>
+输入:
+<div class="cnblogs_code">
+<pre>s = <span style="color: #800000;">"</span><span style="color: #800000;">rabbbit</span><span style="color: #800000;">"</span>, t = <span style="color: #800000;">"</span><span style="color: #800000;">rabbit</span><span style="color: #800000;">"</span></pre>
+</div>
+<p>输出：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">3</span> </pre>
+</div>
+<p>解释：</p>
+<div class="cnblogs_code">
+<pre>如下图所示, 有 <span style="color: #800080;">3</span> 种可以从 s 中得到 <span style="color: #800000;">"</span><span style="color: #800000;">rabbit</span><span style="color: #800000;">"</span><span style="color: #000000;"> 的方案。
+(上箭头符号 </span>^<span style="color: #000000;"> 表示选取的字母)
+rabbbit
+</span>^^^^ ^^<span style="color: #000000;">
+rabbbit
+</span>^^ ^^^^<span style="color: #000000;">
+rabbbit
+</span>^^^ ^^^</pre>
+</div>
+<hr>
+<p>示例&nbsp;2：</p>
+<p>输入:</p>
+<div class="cnblogs_code">
+<pre>s = <span style="color: #800000;">"</span><span style="color: #800000;">babgbag</span><span style="color: #800000;">"</span>, t = <span style="color: #800000;">"</span><span style="color: #800000;">bag</span><span style="color: #800000;">"</span></pre>
+</div>
+输出:
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">5</span> </pre>
+</div>
+<p>解释：</p>
+<div class="cnblogs_code">
+<pre>如下图所示, 有 <span style="color: #800080;">5</span> 种可以从 s 中得到 <span style="color: #800000;">"</span><span style="color: #800000;">bag</span><span style="color: #800000;">"</span><span style="color: #000000;"> 的方案。 
+(上箭头符号 </span>^<span style="color: #000000;"> 表示选取的字母)
+babgbag
+</span>^^ ^<span style="color: #000000;">
+babgbag
+</span>^^    ^<span style="color: #000000;">
+babgbag
+</span>^    ^^<span style="color: #000000;">
+babgbag
+  </span>^  ^^<span style="color: #000000;">
+babgbag
+    </span>^^^</pre>
+</div>
+<p>提示：</p>
+<ul>
+<li><code>0 &lt;= s.length, t.length &lt;= 1000</code></li>
+<li><code>s</code>&nbsp;和&nbsp;<code>t</code>&nbsp;由英文字母组成</li>
+</ul>
+<hr>
+<p>这种题，难度还是困难，递归暴力肯定是第一个排除的，想都不要去想。</p>
+<p>就从这道题开始我的字符串动归的学习之路吧，首先是看到这道题思考，要如何去使用动态规划去保证你能够得到你想要的结果。</p>
+<p>第一件事就是建立dp数组，<span style="background-color: #ffff00;">一定要深刻理解dp数组中每一个元素的含义以及下标的含义。</span>不然永远学不会。</p>
+<p>那么怎么去建立呢，抱歉，我也想不到，不过得到大佬的提示还是知道了要建立一个二维数组，原因是<span style="background-color: #ffff00;"> dp[i][j] 代表了 s字符串 0~i-1 中 包含了多少个 0~j-1 个t</span> ，又是熟悉的边界坑，有人可能会问，为什么dp数组的下标里明明是i,j，却代表的是字符串中i-1和j-1啊之类的，那是因为，dp数组为了把子串为空的情况考虑进去，比如说 s = &ldquo;bba&rdquo; 匹配 t = "b"&nbsp; 首先要考虑的不是 s中的"b" 是否匹配t中的 "b" 而是考虑 s 中的空字符 " " 是否匹配 t中的空字符 " "，然后才是s中的 "b" 是否匹配空字符等等，看到这应该明白了吧，也就是说dp数组扩充了边界，加入了s与t的子串为空的情况，因为s与t中又没有真正的空串,所以判断s,t的时候下标要减一，才能对应上dp[i][j]。</p>
+<hr>
+<p>先把动归的转移方程摆上来，方便下面的例子解释：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">if</span>(s[i - <span style="color: #800080;">1</span>] == t[j - <span style="color: #800080;">1</span><span style="color: #000000;">])
+      dp[i][j] </span>= dp[i-<span style="color: #800080;">1</span>][j-<span style="color: #800080;">1</span>] + dp[i-<span style="color: #800080;">1</span><span style="color: #000000;">][j];
+</span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+      dp[i][j] </span>= dp[i-<span style="color: #800080;">1</span>][j];</pre>
+</div>
+<hr>
+<p>其实这道题不难，难点是你不知道这个dp数组为什么这样求就是正确答案，不明白转移方程的含义，无法把大问题分成子问题，迭代过程不清晰，所以就是很懵，我们先从这一点开始理解，就是先抛弃那些逻辑关系，我们已经知道dp[i][j]代表了 s字符串 0~i-1 中 包含了多少个 0~j-1 个t&nbsp; 对吧，意思就是dp[i][j] 就是一个解，一个答案，那么我们这样想，假如我们已经知道了"bagg" 里面有多少个"bag" ，是dp[4][3] = 2 ，实质题目是求"baggg"里面有多少个"bag"，此时是不是就相当于往"bagg"后面多加了一个"g"，对吧，那么我们略过t中的"b"与"ba"，直接到判断"bag&rdquo;这里来，此时s[i-1] = "g" ,t[i-1] = "g" , 相同，所以等于dp[i-1][j-1] + dp[i-1][j];为什么是这两个相加呢。想象一下，假设我们加入的是一个&ldquo;？&rdquo;字符，先不管它是什么，现在是不是变成了&ldquo;bagg?&rdquo; ,但是，在之前我们已经得知了&ldquo;bagg&rdquo;里面有多少个"bag"，现在即使多了个字符，之前的答案是不是必须要加进来的，也就是dp[i-1][j],然后现在&ldquo;g&rdquo;进来了，它与"bag"最后一个字符串&ldquo;g&rdquo;相同，也就是说，我们可以拿它与最后一个&ldquo;g&rdquo;相匹配，也可以选择不与&ldquo;g&rdquo;相匹配，所以匹配与不匹配造成了两种结果，就是说"bag"可以用"ba&rdquo;跟这个"g&rdquo;组合成一个&ldquo;bag&rdquo; 它也可以跟另外两个"g&rdquo;组合，意思就是因为进来了这个"g",之前所有的&ldquo;ba&rdquo;又可以和这个"g"组成一个新的"bag",把这个&ldquo;g&rdquo;考虑进来，就得到了dp[i-1][j-1]，区别是j变成了j-1,因为&ldquo;g&rdquo;被用来匹配了，而不用&ldquo;g&rdquo;，就相当于进来了个&ldquo;z&rdquo;,变成了"baggz"，那此时dp[i][j]的结果必然就是跟不加&ldquo;z&rdquo;之前一样的为dp[i-1][j],是一个道理。所以必须要用dp[i-1][j-1]+dp[i-1][j]才是正确答案。</p>
+<hr>
+<p>所以思维方式必须是我们已知dp[i][j]的答案，然后判断下一个字符加进来时，会造成什么样的后果就行了，然后组成一个完整的字符串。</p>
+<p>贴上代码观看：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numDistinct</span><span class="params">(string s, string t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = s.<span class="built_in">length</span>();</span><br><span class="line">        <span class="keyword">int</span> m = t.<span class="built_in">length</span>();</span><br><span class="line"></span><br><span class="line">        vector&lt;vector&lt;<span class="keyword">long</span>&gt;&gt; <span class="built_in">dp</span>(n+<span class="number">1</span>,vector&lt;<span class="keyword">long</span>&gt;(m+<span class="number">1</span>));</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt;= n ; i++)dp[i][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt;= m ; i++)dp[<span class="number">0</span>][i] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt;= n ; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span> ; j &lt;= m ; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(s[i - <span class="number">1</span>] == t[j - <span class="number">1</span>])</span><br><span class="line">                    dp[i][j] = dp[i<span class="number">-1</span>][j<span class="number">-1</span>] + dp[i<span class="number">-1</span>][j];</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    dp[i][j] = dp[i<span class="number">-1</span>][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> dp[n][m];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2021/03/26/leetcode115/" title="Leetcode每日一题 115.不同的子序列" target="_blank" rel="external">http://example.com/2021/03/26/leetcode115/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/Jveilcoo" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/XQ.github.io/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/Jveilcoo" target="_blank"><span class="text-dark">天色渐淡</span><small class="ml-1x">EVERYTHING WILL BE OK!</small></a></h3>
+        <div>和相同的人，一起去观赏不同的远方</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/XQ.github.io/2021/03/26/leetcode92/" title="Leetcode每日一题 92.反转链表 II"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/XQ.github.io/2021/03/26/leetcode59/" title="Leetcode每日一题 59.螺旋矩阵 II"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/XQ.github.io/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/XQ.github.io/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Jveilcoo" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/XQ.github.io/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/XQ.github.io/js/plugin.min.js"></script>
+
+
+<script src="/XQ.github.io/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/XQ.github.io/',
+        CONTENT_URL: '/XQ.github.io/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/XQ.github.io/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

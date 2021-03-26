@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>线性代数及其应用(二) | Hexo</title>
+  <meta name="description" content="¶线性代数及其应用(二) 向量方程 线性方程组的重要性质都可用向量概念与符号来描述。 R2中的向量: 　　仅含一列的矩阵称为列向量，或简称向量，包含两个元素的向量如下： 　　  &amp;nbsp;　&amp;nbsp; 其中w1和w2是任意实数，所有两个元素的向量集记为R2，R表示向量中的元素是实数，而指数2表示每个向量包含两个元素.&amp;nbsp; 　　给定R2中两个向量u和v，它们的和u+v是把u和v对应元素相">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线性代数及其应用(二)">
+<meta property="og:url" content="http://example.com/2021/03/26/lial2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="¶线性代数及其应用(二) 向量方程 线性方程组的重要性质都可用向量概念与符号来描述。 R2中的向量: 　　仅含一列的矩阵称为列向量，或简称向量，包含两个元素的向量如下： 　　  &amp;nbsp;　&amp;nbsp; 其中w1和w2是任意实数，所有两个元素的向量集记为R2，R表示向量中的元素是实数，而指数2表示每个向量包含两个元素.&amp;nbsp; 　　给定R2中两个向量u和v，它们的和u+v是把u和v对应元素相">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114203419813-1752537434.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114203438965-2116671834.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114203521345-1191418457.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114203944587-551626870.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114204144474-273683973.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114204235817-645942824.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114204443579-1598459939.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114204712781-911184167.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114204820571-445091784.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114205154150-1250560095.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114205719156-1126824442.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114210420986-390914887.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114210841656-276500780.png">
+<meta property="article:published_time" content="2021-03-26T11:00:38.711Z">
+<meta property="article:modified_time" content="2021-03-26T11:05:08.478Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="线性代数">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114203419813-1752537434.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2021/03/26/lial2/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/XQ.github.io/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/Jveilcoo" target="_blank">
+          <img class="img-circle img-rotate" src="/XQ.github.io/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">天色渐淡</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">EVERYTHING WILL BE OK!</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hunan, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/XQ.github.io/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/XQ.github.io/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/XQ.github.io/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/XQ.github.io/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/XQ.github.io/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Jveilcoo" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/XQ.github.io/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/C/">C++</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E6%AF%8F%E6%97%A5%E6%89%93%E5%8D%A1/">每日打卡</a><span class="category-list-count">15</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/C-%E5%AD%A6%E4%B9%A0/" rel="tag">C++学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/Eigen/" rel="tag">Eigen</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/Leetcode%E9%A2%98%E8%A7%A3/" rel="tag">Leetcode题解</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/%E6%A6%82%E5%BF%B5%E7%9F%A5%E8%AF%86/" rel="tag">概念知识</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" rel="tag">线性代数</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/XQ.github.io/tags/C-%E5%AD%A6%E4%B9%A0/" style="font-size: 13.67px;">C++学习</a> <a href="/XQ.github.io/tags/Eigen/" style="font-size: 13.33px;">Eigen</a> <a href="/XQ.github.io/tags/Leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 14px;">Leetcode题解</a> <a href="/XQ.github.io/tags/%E6%A6%82%E5%BF%B5%E7%9F%A5%E8%AF%86/" style="font-size: 13px;">概念知识</a> <a href="/XQ.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" style="font-size: 13.33px;">线性代数</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/XQ.github.io/archives/2021/03/">三月 2021</a><span class="archive-list-count">33</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/graphics1/" class="title">graphics pipeline - 图形管线</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:18:01.301Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/C/">C++</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/Eigen2/" class="title">Eigen:Matrix and Vector arithmetic</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:12:15.866Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/C/">C++</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/Eigen1/" class="title">Eigen:The Matrix Class</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:05:43.527Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/lial2/" class="title">线性代数及其应用(二)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:00:38.711Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/lial1/" class="title">线性代数及其应用(一)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T10:58:34.458Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8-%E4%BA%8C"><span class="toc-number">1.</span> <span class="toc-text">线性代数及其应用(二)</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-lial2" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      线性代数及其应用(二)
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/XQ.github.io/2021/03/26/lial2/" class="article-date">
+	  <time datetime="2021-03-26T11:00:38.711Z" itemprop="datePublished">2021-03-26</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/XQ.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" rel="tag">线性代数</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/XQ.github.io/2021/03/26/lial2/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="线性代数及其应用-二"><a class="header-anchor" href="#线性代数及其应用-二">¶</a>线性代数及其应用(二)</h2>
+<p>向量方程</p>
+<p>线性方程组的重要性质都可用向量概念与符号来描述。</p>
+<p><strong>R</strong><sup>2</sup>中的向量:</p>
+<p>　　仅含一列的矩阵称为列向量，或简称向量，包含两个元素的向量如下：</p>
+<p>　　<img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114203419813-1752537434.png" alt="" loading="lazy" /><img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114203438965-2116671834.png" alt="" loading="lazy" /><img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114203521345-1191418457.png" alt="" loading="lazy" /></p>
+<hr>
+<p>&nbsp;　&nbsp; 其中w<sub>1</sub>和w<sub>2</sub>是任意实数，所有两个元素的向量集记为<strong>R</strong><sup>2</sup>，<strong>R</strong>表示向量中的元素是实数，而指数2表示每个向量包含两个元素.&nbsp;</p>
+<p>　　给定<strong>R</strong><sup>2</sup>中两个向量u和v，它们的和u+v是把u和v对应元素相加所得的向量，如</p>
+<p>　　<img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114203944587-551626870.png" alt="" loading="lazy" /></p>
+<hr>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">\begin{bmatrix}
+</span><span style="color: #800080;">1</span><span style="color: #000000;">\\ 
+</span>-<span style="color: #800080;">2</span><span style="color: #000000;">\\
+\end{bmatrix}
+</span>+<span style="color: #000000;">
+\begin{bmatrix}
+</span><span style="color: #800080;">2</span><span style="color: #000000;">\\ 
+</span><span style="color: #800080;">5</span><span style="color: #000000;">\\
+\end{bmatrix}
+</span>=<span style="color: #000000;">
+\begin{bmatrix}
+</span><span style="color: #800080;">1</span>+<span style="color: #800080;">2</span><span style="color: #000000;">\\ 
+</span>-<span style="color: #800080;">2</span>+<span style="color: #800080;">5</span><span style="color: #000000;">\\
+\end{bmatrix}
+</span>=<span style="color: #000000;">
+\begin{bmatrix}
+</span><span style="color: #800080;">3</span><span style="color: #000000;">\\ 
+</span><span style="color: #800080;">3</span><span style="color: #000000;">\\
+\end{bmatrix}</span></pre>
+</div>
+<hr>
+<p>　　给定向量u和实数c,u与c的标量乘法（或数乘）是把u的每个元素乘以c,所得向量记为cu，例如：</p>
+<p>　　若<img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114204144474-273683973.png" alt="" loading="lazy" />;, c = 5,则</p>
+<hr>
+<p>&nbsp; &nbsp; &nbsp; &nbsp;<img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114204235817-645942824.png" alt="" loading="lazy" /></p>
+<hr>
+<div class="cnblogs_code">
+<pre>cu = <span style="color: #800080;">5</span><span style="color: #000000;">\begin{bmatrix}
+</span><span style="color: #800080;">3</span><span style="color: #000000;">\\ 
+</span>-<span style="color: #800080;">1</span><span style="color: #000000;">\\
+\end{bmatrix}
+</span>=<span style="color: #000000;">
+\begin{bmatrix}
+</span><span style="color: #800080;">15</span><span style="color: #000000;">\\ 
+</span>-<span style="color: #800080;">5</span><span style="color: #000000;">\\
+\end{bmatrix}</span></pre>
+</div>
+<hr>
+<p><strong>&nbsp;R</strong><sup>2</sup>的几何表示</p>
+<p>　　考虑平面上的直角坐标系，因为平面上每个点由实数的有序对确定，所以可把几何点(a,b) 与列向量<img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114204443579-1598459939.png" alt="" loading="lazy" />等同，因此我们可把R<sup>2</sup>看作平面上所有点的集合</p>
+<p><img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114204712781-911184167.png" alt="" loading="lazy" />&nbsp;&nbsp;
+<hr>
+<p><img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114204820571-445091784.png" alt="" loading="lazy" /></p></p>
+<hr>
+<p>&nbsp;　　两个向量的和的几何意义</p>
+<p>　　<img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114205154150-1250560095.png" alt="" loading="lazy" /></p>
+<hr>
+<p>　　<strong>R</strong><sup>3</sup>中的向量</p>
+<p>　　<img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114205719156-1126824442.png" alt="" loading="lazy" /></p>
+<hr>
+<p>　　<strong>R</strong><sup>n</sup>中的代数性质 （对<strong>R</strong><sup>n</sup>中一切向量u,v,w以及标量c和d）：</p>
+<p>　　1. u + v = v + u</p>
+<p>　　2.(u+v)+w = u+(v+w)</p>
+<p>　　3.(u+0)=0+u=u</p>
+<p>　　4.u+(-u) = -u+u =0</p>
+<p>　　5.c(u+v)=cu+cv</p>
+<p>　　6.(c+d)u=cu+du</p>
+<p>　　7.c(du)=(cd)u</p>
+<p>　　8.1u=u</p>
+<hr>
+<p>　　线性代数的一个主要思想是研究可以表示为某一个固定向量集合{v<sub>1</sub>,v<sub>2</sub>,....v<sub>p</sub>}的线性组合的所有向量</p>
+<p>　　Span{v} 与 Span{u,v}的几何解释</p>
+<p>　　设v是<strong>R</strong><sup>3</sup>中的向量，那么Span{v}就是v的所有标量倍数的集合，也就是<strong>R</strong><sup>3</sup>中通过v和0的直线上所有点的集合</p>
+<p>　　</p>
+<p>&nbsp;　　<img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114210420986-390914887.png" alt="" loading="lazy" /></p>
+<hr>
+<p>　　　若u和v是<strong>R</strong><sup>3</sup>中的非零向量，v不是u的倍数，则Span{u,v}是<strong>R</strong><sup>3</sup>中包含u,v和0的平面，特别地，Span{u,v}包含<strong>R</strong><sup>3</sup>中通过u与0的直线，也包含通过v与0的直线，反正就是确定了一个平面。</p>
+<p>　　　　</p>
+<p>&nbsp;　　<img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210114210841656-276500780.png" alt="" loading="lazy" /></p>
+<hr>
+<p>&nbsp;　　蓝色范围在概念上无限扩充。</p>
+<p>&nbsp;</p>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2021/03/26/lial2/" title="线性代数及其应用(二)" target="_blank" rel="external">http://example.com/2021/03/26/lial2/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/Jveilcoo" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/XQ.github.io/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/Jveilcoo" target="_blank"><span class="text-dark">天色渐淡</span><small class="ml-1x">EVERYTHING WILL BE OK!</small></a></h3>
+        <div>和相同的人，一起去观赏不同的远方</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/XQ.github.io/2021/03/26/Eigen1/" title="Eigen:The Matrix Class"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/XQ.github.io/2021/03/26/lial1/" title="线性代数及其应用(一)"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/XQ.github.io/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/XQ.github.io/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Jveilcoo" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/XQ.github.io/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/XQ.github.io/js/plugin.min.js"></script>
+
+
+<script src="/XQ.github.io/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/XQ.github.io/',
+        CONTENT_URL: '/XQ.github.io/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/XQ.github.io/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Composite模式与Prototype模式 | Hexo</title>
+  <meta name="description" content="¶Composite模式与Prototype模式 这两种模式都是基于 Delegation(委托) + Inheritance(继承)&amp;nbsp; 而来的， 首先讲一下Composite模式，也就是组合模式，是一个经典的设计模式。  组合模式是什么？ 组合模式是指将对象组合成树形结构以表示&quot;部分-整体&quot;的层次结构，组合模式使得用户对单个对象和组合对象的使用具有一致性。  假如我们面临一个场景，需要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Composite模式与Prototype模式">
+<meta property="og:url" content="http://example.com/2021/03/26/C++design/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="¶Composite模式与Prototype模式 这两种模式都是基于 Delegation(委托) + Inheritance(继承)&amp;nbsp; 而来的， 首先讲一下Composite模式，也就是组合模式，是一个经典的设计模式。  组合模式是什么？ 组合模式是指将对象组合成树形结构以表示&quot;部分-整体&quot;的层次结构，组合模式使得用户对单个对象和组合对象的使用具有一致性。  假如我们面临一个场景，需要">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210115204048564-983255842.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210116112054819-1692135074.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210116113439075-742580494.png">
+<meta property="article:published_time" content="2021-03-26T08:44:28.650Z">
+<meta property="article:modified_time" content="2021-03-26T08:48:42.731Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="C++学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210115204048564-983255842.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2021/03/26/C++design/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/XQ.github.io/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/Jveilcoo" target="_blank">
+          <img class="img-circle img-rotate" src="/XQ.github.io/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">天色渐淡</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">EVERYTHING WILL BE OK!</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hunan, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/XQ.github.io/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/XQ.github.io/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/XQ.github.io/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/XQ.github.io/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/XQ.github.io/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Jveilcoo" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/XQ.github.io/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/C/">C++</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E6%AF%8F%E6%97%A5%E6%89%93%E5%8D%A1/">每日打卡</a><span class="category-list-count">15</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/C-%E5%AD%A6%E4%B9%A0/" rel="tag">C++学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/Eigen/" rel="tag">Eigen</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/Leetcode%E9%A2%98%E8%A7%A3/" rel="tag">Leetcode题解</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/%E6%A6%82%E5%BF%B5%E7%9F%A5%E8%AF%86/" rel="tag">概念知识</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" rel="tag">线性代数</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/XQ.github.io/tags/C-%E5%AD%A6%E4%B9%A0/" style="font-size: 13.67px;">C++学习</a> <a href="/XQ.github.io/tags/Eigen/" style="font-size: 13.33px;">Eigen</a> <a href="/XQ.github.io/tags/Leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 14px;">Leetcode题解</a> <a href="/XQ.github.io/tags/%E6%A6%82%E5%BF%B5%E7%9F%A5%E8%AF%86/" style="font-size: 13px;">概念知识</a> <a href="/XQ.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" style="font-size: 13.33px;">线性代数</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/XQ.github.io/archives/2021/03/">三月 2021</a><span class="archive-list-count">33</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/graphics1/" class="title">graphics pipeline - 图形管线</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:18:01.301Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/C/">C++</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/Eigen2/" class="title">Eigen:Matrix and Vector arithmetic</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:12:15.866Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/C/">C++</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/Eigen1/" class="title">Eigen:The Matrix Class</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:05:43.527Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/lial2/" class="title">线性代数及其应用(二)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T11:00:38.711Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/26/lial1/" class="title">线性代数及其应用(一)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-26T10:58:34.458Z" itemprop="datePublished">2021-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Composite%E6%A8%A1%E5%BC%8F%E4%B8%8EPrototype%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">Composite模式与Prototype模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#code%EF%BF%BC0"><span class="toc-number">2.</span> <span class="toc-text">1
+2
+3
+4
+5
+class Primitive:public Component
+&amp;#123;
+public:
+    Primitive(int val):Component(val)&amp;#123;&amp;#125;
+&amp;#125;;
+</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#code%EF%BF%BC1"><span class="toc-number">3.</span> <span class="toc-text">1
+2
+3
+4
+5
+6
+7
+class Component
+&amp;#123;
+    int value;
+public:
+    Component(int val)&amp;#123;value &#x3D; val;&amp;#125;
+    virtual void add(Component*)&amp;#123;&amp;#125;
+&amp;#125;;
+</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#code%EF%BF%BC3"><span class="toc-number">4.</span> <span class="toc-text">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+#include&lt;iostream&gt;
+#include&lt;vector&gt;
+#include&lt;string&gt;
+using namespace std;
+
+class Component &amp;#123;
+    int value;
+public:
+    Component() &amp;#123; &amp;#125;
+    virtual void add(Component*) &amp;#123;&amp;#125;;
+    virtual void print(string path) &amp;#123;
+        cout &lt;&lt; &quot;&quot;;
+    &amp;#125;;
+&amp;#125;;
+
+class Composite : public Component&amp;#123;
+    string name;
+    vector&lt;Component*&gt; c;
+public:
+    Composite(string str) :Component() &amp;#123; name &#x3D; str; &amp;#125;
+
+    void add(Component* comp) &amp;#123;
+        c.push_back(comp);
+    &amp;#125;
+
+    void print(string path) &amp;#123;
+        vector&lt;Component*&gt;::iterator it &#x3D; c.begin();
+        for (; it !&#x3D; c.end(); it++) &amp;#123;
+            Component * comp &#x3D; *it;
+            string ss &#x3D; path + &quot;\\&quot; + name;
+            comp-&gt;print(ss);
+            delete comp;
+        &amp;#125;
+    &amp;#125;
+&amp;#125;;
+
+class Primitive : public Component &amp;#123;
+    string name;
+    int size;
+public:
+    Primitive(string str) :Component() &amp;#123; name &#x3D; str; &amp;#125;
+    void print(string path) &amp;#123;
+        cout &lt;&lt; path &lt;&lt; &quot;\\&quot; &lt;&lt; name &lt;&lt;endl;
+    &amp;#125;
+&amp;#125;;
+
+int main() &amp;#123;
+    cout &lt;&lt; &quot;创建目录中...&quot; &lt;&lt; endl;
+    Composite * rootdir &#x3D; new Composite(&quot;root&quot;);
+    Composite * dis_o &#x3D; new Composite(&quot;cdcd&quot;);
+    Composite * dis_s &#x3D; new Composite(&quot;asda&quot;);
+    rootdir-&gt;add(dis_o);
+    rootdir-&gt;add(dis_s);
+    dis_o-&gt;add(new Primitive(&quot;file1&quot;));
+    dis_s-&gt;add(new Primitive(&quot;file2&quot;));
+
+    cout &lt;&lt; &quot;输出目录&quot; &lt;&lt; endl;
+    rootdir-&gt;print(&quot;cmd:&quot;);
+    cout &lt;&lt; endl;
+    system(&quot;pause&quot;);
+    return 0; 
+&amp;#125;
+</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-C++design" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Composite模式与Prototype模式
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/XQ.github.io/2021/03/26/C++design/" class="article-date">
+	  <time datetime="2021-03-26T08:44:28.650Z" itemprop="datePublished">2021-03-26</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/XQ.github.io/categories/C/">C++</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/XQ.github.io/tags/C-%E5%AD%A6%E4%B9%A0/" rel="tag">C++学习</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/XQ.github.io/2021/03/26/C++design/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="Composite模式与Prototype模式"><a class="header-anchor" href="#Composite模式与Prototype模式">¶</a>Composite模式与Prototype模式</h2>
+<p>这两种模式都是基于 Delegation(委托) + Inheritance(继承)&nbsp; 而来的，</p>
+<p>首先讲一下Composite模式，也就是组合模式，是一个经典的设计模式。</p>
+<hr>
+<p><strong>组合模式是什么？</strong></p>
+<p><strong>组合模式是指将对象组合成树形结构以表示"部分-整体"的层次结构，组合模式使得用户对单个对象和组合对象的使用具有一致性。</strong></p>
+<hr>
+<p>假如我们面临一个场景，需要做一个文件类，那么我们知道，打开一个文件，文件既可以是文件夹，也可以是单体文件，为了便于识别，个体文件我们叫做Primitive,文件夹我们叫做Composite，由于文件夹里可以存放Primitive，也可以再存放Composite，形成一个递归结构，如果消耗时间去进行if-else判断显得愚钝并且效率极低，而且用户不管你如何设计，文件夹和文件如果都能当做一种东西来操作的话，是最好不过的，组合模式的目的就是让用户不再区分操作的是组合对象还是个体对象，而是以一个统一的方式来操作，实现这个目标的关键点就是设计一个抽象的基类，让它既可以代表组合对象也可以代表个体对象，这样一来，用户就不需要区分这两种对象了，只需要全部通过Compostie对象进行统一操作就行了。</p>
+<p>（其实文件系统就是组合模型的典型应用）</p>
+<p>&nbsp;</p>
+<p><img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210115204048564-983255842.png" alt="" loading="lazy" /></p>
+<p>伪代码实现模拟：</p>
+<h2 id="code￼0"><a class="header-anchor" href="#code￼0">¶</a><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Primitive</span>:</span><span class="keyword">public</span> Component</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Primitive</span>(<span class="keyword">int</span> val):<span class="built_in">Component</span>(val)&#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></h2>
+<h2 id="code￼1"><a class="header-anchor" href="#code￼1">¶</a><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Component</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> value;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Component</span>(<span class="keyword">int</span> val)&#123;value = val;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Component*)</span></span>&#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Composite</span>:</span> <span class="keyword">public</span> Component</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;Component*&gt; c;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Composite</span>(<span class="keyword">int</span> val):<span class="built_in">Component</span>(val)&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(Component* elem)</span></span>&#123;</span><br><span class="line">        c.<span class="built_in">push_back</span>(elem);</span><br><span class="line">    &#125;</span><br><span class="line">...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这样Composite类 通过父类指针既能接收primitive类也能接收自己。</p>
+<p>通过下面代码就可以更加清晰看出来：</p>
+<h2 id="code￼3"><a class="header-anchor" href="#code￼3">¶</a><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Component</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> value;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Component</span>() &#123; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Component*)</span> </span>&#123;&#125;;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(string path)</span> </span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;&quot;</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Composite</span> :</span> <span class="keyword">public</span> Component&#123;</span><br><span class="line">    string name;</span><br><span class="line">    vector&lt;Component*&gt; c;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Composite</span>(string str) :<span class="built_in">Component</span>() &#123; name = str; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(Component* comp)</span> </span>&#123;</span><br><span class="line">        c.<span class="built_in">push_back</span>(comp);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(string path)</span> </span>&#123;</span><br><span class="line">        vector&lt;Component*&gt;::iterator it = c.<span class="built_in">begin</span>();</span><br><span class="line">        <span class="keyword">for</span> (; it != c.<span class="built_in">end</span>(); it++) &#123;</span><br><span class="line">            Component * comp = *it;</span><br><span class="line">            string ss = path + <span class="string">&quot;\\&quot;</span> + name;</span><br><span class="line">            comp-&gt;<span class="built_in">print</span>(ss);</span><br><span class="line">            <span class="keyword">delete</span> comp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Primitive</span> :</span> <span class="keyword">public</span> Component &#123;</span><br><span class="line">    string name;</span><br><span class="line">    <span class="keyword">int</span> size;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Primitive</span>(string str) :<span class="built_in">Component</span>() &#123; name = str; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(string path)</span> </span>&#123;</span><br><span class="line">        cout &lt;&lt; path &lt;&lt; <span class="string">&quot;\\&quot;</span> &lt;&lt; name &lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;创建目录中...&quot;</span> &lt;&lt; endl;</span><br><span class="line">    Composite * rootdir = <span class="keyword">new</span> <span class="built_in">Composite</span>(<span class="string">&quot;root&quot;</span>);</span><br><span class="line">    Composite * dis_o = <span class="keyword">new</span> <span class="built_in">Composite</span>(<span class="string">&quot;cdcd&quot;</span>);</span><br><span class="line">    Composite * dis_s = <span class="keyword">new</span> <span class="built_in">Composite</span>(<span class="string">&quot;asda&quot;</span>);</span><br><span class="line">    rootdir-&gt;<span class="built_in">add</span>(dis_o);</span><br><span class="line">    rootdir-&gt;<span class="built_in">add</span>(dis_s);</span><br><span class="line">    dis_o-&gt;<span class="built_in">add</span>(<span class="keyword">new</span> <span class="built_in">Primitive</span>(<span class="string">&quot;file1&quot;</span>));</span><br><span class="line">    dis_s-&gt;<span class="built_in">add</span>(<span class="keyword">new</span> <span class="built_in">Primitive</span>(<span class="string">&quot;file2&quot;</span>));</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;输出目录&quot;</span> &lt;&lt; endl;</span><br><span class="line">    rootdir-&gt;<span class="built_in">print</span>(<span class="string">&quot;cmd:&quot;</span>);</span><br><span class="line">    cout &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></h2>
+<p>输出结果：</p>
+<p><img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210116112054819-1692135074.png" alt="" loading="lazy" /></p>
+<hr>
+<p>看得出来我们只需要对Composite类进行操作，就又可以存放自己，又可以存放Primitive类，这就是组合模式的便利之处了。</p>
+<hr>
+<p>接下来说Prototype模式，也就是原型模式，这个模式强大之处在于它能够在你不知道你以后要设计什么类的情况下，获取一个这个类的副本，实现一系列操作。</p>
+<p>假如我们设计了一个框架，我们不知道以后使用人员会写入什么派生类，也总不可能去用string获取类名创建，这样是不符合C++编译标准的，那么此时就要用Prototype模式了，利用使用人员写的子类自己创建自己，然后传到自己的框架基类，获取一个副本，以实现对子类对象的操作。</p>
+<hr>
+<p>如下图：</p>
+<p><img src="https://img2020.cnblogs.com/blog/1582514/202101/1582514-20210116113439075-742580494.png" alt="" loading="lazy" /></p>
+<p>&nbsp;</p>
+<p><span style="background-color: #ffff00;">&nbsp;下划线代表静态变量，-是私有类型，#是保护类型</span></p>
+<p>假如上面的Image类是我们自己写的，但是我们写的时候并没有LandSatImage类与SpotImage类，这些类有可能是在交付到客户手上，客户自己写的，那么我们如何去用我们自己的类来实现构造当时并不存在的类呢。</p>
+<hr>
+<p>可以看到 LandSatImage类，创建了一个静态的自己，那么此时，一定会调用本身的构造函数 LandSatImage(),可以看到构造函数中有addPrototype(this); 这个是父类中的一个静态函数，作为子类是可以直接调用的，这么做是为了把自己传到父类去，传完之后那么现在就全部完成了吗？还没有，此时相当于（粗略理解） 我把自己的类的指针给了父类，然后父类拿到现在这个类的指针后，保存到prototypes[]中，还要利用这个指针创建一个实例化对象，才算真正的使用，clone()的作用就是返回一个实例化对象，上图描写的很清楚，return new LandSatImage, 那么上面的 prototypes[i]-&gt;clone() 其实就相当于 LandSatImage a = new LandSatImage();所以我们获得了一个实例化对象，就可以对他进行操作了，还要注意一个很重要的点，可以看到LandSatImage中有两个构造函数，那么作用是什么呢，因为prototypes[i]-&gt;clone()调用了LandSatImage中的clone()函数，然后return new LandSatImage;此时因为创建了一个LandSatImage对象，所以还会调用构造函数，那么如果只有第一个构造函数的话，就会套娃，无限addPrototype(this); 所以用第二个构造函数，加一个数字，这样就会避免调用第一个构造函数，所以其实是在clone()函数中应该写return new LandSatImage(1);（任何数字都行）这样就不会再次调用第一个构造函数了。</p>
+<hr>
+<p>实现代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">ImageType</span> &#123;</span></span><br><span class="line">    LSAT,SPOT</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Image</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> Image *<span class="title">findAndClone</span><span class="params">(ImageType)</span></span>;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="comment">//规定子类必须实现clone()函数</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> Image * <span class="title">clone</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//获得子类的文件格式</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> ImageType <span class="title">returnType</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addPrototype</span><span class="params">(Image * image)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        _prototypes[_nextSlot++] = image;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">static</span> Image * _prototypes[<span class="number">10</span>];</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> _nextSlot;</span><br><span class="line">&#125;;</span><br><span class="line">Image * Image::_prototypes[];</span><br><span class="line"><span class="keyword">int</span> Image::_nextSlot;</span><br><span class="line"><span class="function">Image * <span class="title">Image::findAndClone</span><span class="params">(ImageType type)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; _nextSlot; i++)</span><br><span class="line">        <span class="comment">//保证副本格式正确</span></span><br><span class="line">        <span class="keyword">if</span> (_prototypes[i]-&gt;<span class="built_in">returnType</span>() == type)</span><br><span class="line">            <span class="keyword">return</span> _prototypes[i]-&gt;<span class="built_in">clone</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LandSatImage</span> :</span><span class="keyword">public</span> Image</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//返回当前文件格式</span></span><br><span class="line">    <span class="function">ImageType <span class="title">returnType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> LSAT;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;LandSatImage::draw&quot;</span> &lt;&lt; _id &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//创建对象</span></span><br><span class="line">    <span class="function">Image * <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">LandSatImage</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="built_in">LandSatImage</span>(<span class="keyword">int</span> dummy) &#123;</span><br><span class="line">        _id = _count++;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">static</span> LandSatImage _landSatImage;</span><br><span class="line">    <span class="built_in">LandSatImage</span>() &#123;</span><br><span class="line">        <span class="built_in">addPrototype</span>(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> _id;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> _count;</span><br><span class="line">&#125;;</span><br><span class="line">LandSatImage LandSatImage::_landSatImage;</span><br><span class="line"><span class="keyword">int</span> LandSatImage::_count = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>以上就是个人对两种模式一点理解。</p>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2021/03/26/C++design/" title="Composite模式与Prototype模式" target="_blank" rel="external">http://example.com/2021/03/26/C++design/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/Jveilcoo" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/XQ.github.io/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/Jveilcoo" target="_blank"><span class="text-dark">天色渐淡</span><small class="ml-1x">EVERYTHING WILL BE OK!</small></a></h3>
+        <div>和相同的人，一起去观赏不同的远方</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/XQ.github.io/2021/03/26/C++ctordtor/" title="C++复合与继承下的ctor和dtor顺序"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/XQ.github.io/2021/03/26/C++cvfunc/" title="Conversion function 转换函数"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/XQ.github.io/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/XQ.github.io/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Jveilcoo" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/XQ.github.io/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/XQ.github.io/js/plugin.min.js"></script>
+
+
+<script src="/XQ.github.io/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/XQ.github.io/',
+        CONTENT_URL: '/XQ.github.io/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/XQ.github.io/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
