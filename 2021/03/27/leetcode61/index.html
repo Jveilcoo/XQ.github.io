@@ -17,21 +17,24 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>Leetcode每日一题 150.逆波兰表达式求值 | 学习使我快乐</title>
-  <meta name="description" content="150. 逆波兰表达式求值   根据&amp;nbsp;逆波兰表示法，求表达式的值。 有效的算符包括&amp;nbsp;+、-、*、&#x2F;&amp;nbsp;。每个运算对象可以是整数，也可以是另一个逆波兰表达式。 &amp;nbsp; 说明：  整数除法只保留整数部分。 给定逆波兰表达式总是有效的。换句话说，表达式总会得出有效数值且不存在除数为 0 的情况。  &amp;nbsp; 示例&amp;nbsp;1：  输入：tokens &#x3D; [&quot;2&quot;,">
+  <title>Leetcode每日一题 61.旋转链表 | 学习使我快乐</title>
+  <meta name="description" content="¶61. 旋转链表 给你一个链表的头节点 head ，旋转链表，将链表每个节点向右移动 k 个位置。 示例 1：  12输入：head &#x3D; [1,2,3,4,5], k &#x3D; 2  输出：[4,5,1,2,3]   示例 2：  12输入：head &#x3D; [0,1,2], k &#x3D; 4  输出：[2,0,1] 提示： 链表中节点的数目在范围 [0, 500] 内 -100 &lt;&#x3D; Node.val">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode每日一题 150.逆波兰表达式求值">
-<meta property="og:url" content="http://example.com/2021/03/26/leetcode150/index.html">
+<meta property="og:title" content="Leetcode每日一题 61.旋转链表">
+<meta property="og:url" content="http://example.com/2021/03/27/leetcode61/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="150. 逆波兰表达式求值   根据&amp;nbsp;逆波兰表示法，求表达式的值。 有效的算符包括&amp;nbsp;+、-、*、&#x2F;&amp;nbsp;。每个运算对象可以是整数，也可以是另一个逆波兰表达式。 &amp;nbsp; 说明：  整数除法只保留整数部分。 给定逆波兰表达式总是有效的。换句话说，表达式总会得出有效数值且不存在除数为 0 的情况。  &amp;nbsp; 示例&amp;nbsp;1：  输入：tokens &#x3D; [&quot;2&quot;,">
+<meta property="og:description" content="¶61. 旋转链表 给你一个链表的头节点 head ，旋转链表，将链表每个节点向右移动 k 个位置。 示例 1：  12输入：head &#x3D; [1,2,3,4,5], k &#x3D; 2  输出：[4,5,1,2,3]   示例 2：  12输入：head &#x3D; [0,1,2], k &#x3D; 4  输出：[2,0,1] 提示： 链表中节点的数目在范围 [0, 500] 内 -100 &lt;&#x3D; Node.val">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-03-26T06:45:13.219Z">
-<meta property="article:modified_time" content="2021-03-26T07:51:00.192Z">
+<meta property="og:image" content="https://assets.leetcode.com/uploads/2020/11/13/rotate1.jpg">
+<meta property="og:image" content="https://assets.leetcode.com/uploads/2020/11/13/roate2.jpg">
+<meta property="article:published_time" content="2021-03-27T04:42:17.133Z">
+<meta property="article:modified_time" content="2021-03-27T04:53:26.138Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Leetcode题解">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://assets.leetcode.com/uploads/2020/11/13/rotate1.jpg">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://example.com/2021/03/26/leetcode150/index.html">
+  <link rel="canonical" href="http://example.com/2021/03/27/leetcode61/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -316,21 +319,21 @@
   <div class="slimContent">
     <nav id="toc" class="article-toc">
       <h3 class="toc-title">文章目录</h3>
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">150. 逆波兰表达式求值</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#61-%E6%97%8B%E8%BD%AC%E9%93%BE%E8%A1%A8"><span class="toc-number">1.</span> <span class="toc-text">61. 旋转链表</span></a></li></ol>
     </nav>
   </div>
 </aside>
 
 <main class="main" role="main">
   <div class="content">
-  <article id="post-leetcode150" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-leetcode61" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      Leetcode每日一题 150.逆波兰表达式求值
+      Leetcode每日一题 61.旋转链表
     </h1>
   
 
@@ -338,8 +341,8 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/XQ.github.io/2021/03/26/leetcode150/" class="article-date">
-	  <time datetime="2021-03-26T06:45:13.219Z" itemprop="datePublished">2021-03-26</time>
+	<a href="/XQ.github.io/2021/03/27/leetcode61/" class="article-date">
+	  <time datetime="2021-03-27T04:42:17.133Z" itemprop="datePublished">2021-03-27</time>
 	</a>
 </span>
         
@@ -364,61 +367,29 @@
 	</span>
 
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/XQ.github.io/2021/03/26/leetcode150/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/XQ.github.io/2021/03/27/leetcode61/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h4 class="css-10c1h40-Title eugt34i1" data-cypress="QuestionTitle"><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/evaluate-reverse-polish-notation/">150. 逆波兰表达式求值</a></h4>
-<div class="content__1Y2H">
-<div class="notranslate">
-<p>根据<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E9%80%86%E6%B3%A2%E5%85%B0%E5%BC%8F/128437">&nbsp;逆波兰表示法</a>，求表达式的值。</p>
-<p>有效的算符包括&nbsp;<code>+</code>、<code>-</code>、<code>*</code>、<code>/</code>&nbsp;。每个运算对象可以是整数，也可以是另一个逆波兰表达式。</p>
-<p>&nbsp;</p>
-<p>说明：</p>
-<ul>
-<li>整数除法只保留整数部分。</li>
-<li>给定逆波兰表达式总是有效的。换句话说，表达式总会得出有效数值且不存在除数为 0 的情况。</li>
-</ul>
-<p>&nbsp;</p>
-<p>示例&nbsp;1：</p>
-<div class="cnblogs_code">
-<pre>输入：tokens = [<span style="color: #800000;">"</span><span style="color: #800000;">2</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">1</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">+</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">3</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">*</span><span style="color: #800000;">"</span><span style="color: #000000;">]
-输出：</span><span style="color: #800080;">9</span><span style="color: #000000;">
-解释：该算式转化为常见的中缀算术表达式为：((</span><span style="color: #800080;">2</span> + <span style="color: #800080;">1</span>) * <span style="color: #800080;">3</span>) = <span style="color: #800080;">9</span></pre>
-</div>
-<p>示例&nbsp;2：</p>
-<div class="cnblogs_code">
-<pre>输入：tokens = [<span style="color: #800000;">"</span><span style="color: #800000;">4</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">13</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">5</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">/</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">+</span><span style="color: #800000;">"</span><span style="color: #000000;">]
-输出：</span><span style="color: #800080;">6</span><span style="color: #000000;">
-解释：该算式转化为常见的中缀算术表达式为：(</span><span style="color: #800080;">4</span> + (<span style="color: #800080;">13</span> / <span style="color: #800080;">5</span>)) = <span style="color: #800080;">6</span></pre>
-</div>
-<p>示例&nbsp;3：</p>
-<div class="cnblogs_code">
-<pre>输入：tokens = [<span style="color: #800000;">"</span><span style="color: #800000;">10</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">6</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">9</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">3</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">+</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">-11</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">*</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">/</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">*</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">17</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">+</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">5</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">+</span><span style="color: #800000;">"</span><span style="color: #000000;">]
-输出：</span><span style="color: #800080;">22</span><span style="color: #000000;">
-解释：
-该算式转化为常见的中缀算术表达式为：
-  ((</span><span style="color: #800080;">10</span> * (<span style="color: #800080;">6</span> / ((<span style="color: #800080;">9</span> + <span style="color: #800080;">3</span>) * -<span style="color: #800080;">11</span>))) + <span style="color: #800080;">17</span>) + <span style="color: #800080;">5</span>
-= ((<span style="color: #800080;">10</span> * (<span style="color: #800080;">6</span> / (<span style="color: #800080;">12</span> * -<span style="color: #800080;">11</span>))) + <span style="color: #800080;">17</span>) + <span style="color: #800080;">5</span>
-= ((<span style="color: #800080;">10</span> * (<span style="color: #800080;">6</span> / -<span style="color: #800080;">132</span>)) + <span style="color: #800080;">17</span>) + <span style="color: #800080;">5</span>
-= ((<span style="color: #800080;">10</span> * <span style="color: #800080;">0</span>) + <span style="color: #800080;">17</span>) + <span style="color: #800080;">5</span>
-= (<span style="color: #800080;">0</span> + <span style="color: #800080;">17</span>) + <span style="color: #800080;">5</span>
-= <span style="color: #800080;">17</span> + <span style="color: #800080;">5</span>
-= <span style="color: #800080;">22</span></pre>
-</div>
-<p>&nbsp;</p>
+        <h2 id="61-旋转链表"><a class="header-anchor" href="#61-旋转链表">¶</a>61. 旋转链表</h2>
+<p>给你一个链表的头节点 head ，旋转链表，将链表每个节点向右移动 k 个位置。</p>
+<p>示例 1：<br>
+<img src="https://assets.leetcode.com/uploads/2020/11/13/rotate1.jpg"></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：head = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>], k = <span class="number">2</span>  </span><br><span class="line">输出：[<span class="number">4</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]  </span><br></pre></td></tr></table></figure>
+<p>示例 2：<br>
+<img src="https://assets.leetcode.com/uploads/2020/11/13/roate2.jpg"></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：head = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>], k = <span class="number">4</span>  </span><br><span class="line">输出：[<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
 <p>提示：</p>
-<ul>
-<li><code>1 &lt;= tokens.length &lt;= 104</code></li>
-<li><code>tokens[i]</code>&nbsp;要么是一个算符（<code>"+"</code>、<code>"-"</code>、<code>"*"</code>&nbsp;或&nbsp;<code>"/"</code>），要么是一个在范围&nbsp;<code>[-200, 200]</code>&nbsp;内的整数</li>
-</ul>
-<p>逆波兰应该算很常见的题目了吧，直接用一个栈，遇到符号的数字时做相应处理就行了。注意点就是遇到数字时要判断该数字的正负，以为传入进来的tokens保存的是string类型，我们不能直接把每一位相加，如果有负号会导致数字出错。</p>
-<p>&nbsp;</p>
-</div>
-</div>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">evalRPN</span><span class="params">(vector&lt;string&gt;&amp; tokens)</span> </span>&#123;</span><br><span class="line">        stack&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">        <span class="keyword">int</span> n = tokens.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n ; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            string tmp = tokens[i];</span><br><span class="line">            <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span>(tmp!=<span class="string">&quot;+&quot;</span>&amp;&amp;tmp!=<span class="string">&quot;-&quot;</span>&amp;&amp;tmp!=<span class="string">&quot;/&quot;</span>&amp;&amp;tmp!=<span class="string">&quot;*&quot;</span>)</span><br><span class="line">            &#123;           </span><br><span class="line">                <span class="keyword">int</span> k;</span><br><span class="line">                <span class="keyword">if</span>(tmp[<span class="number">0</span>]!=<span class="string">&#x27;-&#x27;</span>)k=<span class="number">0</span>;</span><br><span class="line">                <span class="keyword">else</span> k=<span class="number">1</span>;</span><br><span class="line">                <span class="keyword">for</span>(; k &lt; tmp.<span class="built_in">length</span>(); k++)</span><br><span class="line">                &#123;</span><br><span class="line">                    sum = sum * <span class="number">10</span> + (tmp[k] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(tmp[<span class="number">0</span>] == <span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">                s.<span class="built_in">push</span>(-sum);</span><br><span class="line">                <span class="keyword">else</span> s.<span class="built_in">push</span>(sum);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(tmp == <span class="string">&quot;+&quot;</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">int</span> a = s.<span class="built_in">top</span>();</span><br><span class="line">                    s.<span class="built_in">pop</span>();</span><br><span class="line">                    <span class="keyword">int</span> b = s.<span class="built_in">top</span>();</span><br><span class="line">                    s.<span class="built_in">pop</span>();</span><br><span class="line">                    s.<span class="built_in">push</span>(a+b);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(tmp == <span class="string">&quot;-&quot;</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">int</span> a = s.<span class="built_in">top</span>();</span><br><span class="line">                    s.<span class="built_in">pop</span>();</span><br><span class="line">                    <span class="keyword">int</span> b = s.<span class="built_in">top</span>();</span><br><span class="line">                    s.<span class="built_in">pop</span>();</span><br><span class="line">                    s.<span class="built_in">push</span>(b-a);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(tmp == <span class="string">&quot;*&quot;</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">int</span> a = s.<span class="built_in">top</span>();</span><br><span class="line">                    s.<span class="built_in">pop</span>();</span><br><span class="line">                    <span class="keyword">int</span> b = s.<span class="built_in">top</span>();</span><br><span class="line">                    s.<span class="built_in">pop</span>();</span><br><span class="line">                    s.<span class="built_in">push</span>(a*b);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(tmp == <span class="string">&quot;/&quot;</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">int</span> a = s.<span class="built_in">top</span>();</span><br><span class="line">                    s.<span class="built_in">pop</span>();</span><br><span class="line">                    <span class="keyword">int</span> b = s.<span class="built_in">top</span>();</span><br><span class="line">                    s.<span class="built_in">pop</span>();</span><br><span class="line">                    s.<span class="built_in">push</span>(b/a);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s.<span class="built_in">top</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>链表中节点的数目在范围 [0, 500] 内<br>
+-100 &lt;= Node.val &lt;= 100<br>
+0 &lt;= k &lt;= 2 * 10^9</p>
+<hr>
+<p>对于这题我们可以直接先将链表连成环，然后断开旋转后的头尾结点就行了。</p>
+<p>比如 1-&gt;2-&gt;3-&gt;4-&gt;5  我们将 5连上1 ，然后再将3,4断开，这样我们就得到了一个旋转后的链表。</p>
+<p>代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">rotateRight</span><span class="params">(ListNode* head, <span class="keyword">int</span> k)</span> </span>&#123; </span><br><span class="line">        <span class="keyword">if</span>(head == <span class="literal">NULL</span>)<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">int</span> len = <span class="number">1</span>;</span><br><span class="line">        ListNode * p = head;</span><br><span class="line">        <span class="keyword">while</span>(p-&gt;next!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">            p = p-&gt;next;</span><br><span class="line">            len++;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        k=k%len;</span><br><span class="line">        <span class="keyword">if</span>(k==<span class="number">0</span>)<span class="keyword">return</span> head;<span class="comment">//如果不移动 直接返回表头</span></span><br><span class="line"></span><br><span class="line">        ListNode * q = head;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; len - k - <span class="number">1</span> ; i++)&#123;</span><br><span class="line">            q = q-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        p-&gt;next = head;</span><br><span class="line">        ListNode * newHead = q-&gt;next;</span><br><span class="line">        q-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">return</span> newHead;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -428,7 +399,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://example.com/2021/03/26/leetcode150/" title="Leetcode每日一题 150.逆波兰表达式求值" target="_blank" rel="external">http://example.com/2021/03/26/leetcode150/</a>
+      <a href="http://example.com/2021/03/27/leetcode61/" title="Leetcode每日一题 61.旋转链表" target="_blank" rel="external">http://example.com/2021/03/27/leetcode61/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -474,13 +445,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/XQ.github.io/2021/03/26/leetcode503/" title="Leetcode每日一题  503.下一个更大元素II"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/XQ.github.io/2021/03/25/hello-world/" title="Hello World"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/XQ.github.io/2021/03/26/leetcode83/" title="Leetcode每日一题 83.删除排序链表中的重复元素"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
