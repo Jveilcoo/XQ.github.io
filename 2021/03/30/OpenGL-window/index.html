@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>OpenGL(一) 渲染循环创建窗口 | 学习使我快乐</title>
+  <meta name="description" content="¶OpenGL(一) 渲染循环创建窗口 注：本文仅供自己以及OPENGL初学者共同学习进步，并无实际教学意义，不过会对自己学习中遇到的关键点加上个人解释。应该会对初学者有所帮助，如有错误请指正！ 上次我们已经配置好了glfw + glad环境,接下来就是我们实践使用的时候了。  首先，我们先将要使用的头文件加进来，注意，这里先后顺序不能错： 12#include &lt;glad&#x2F;glad.h&amp;g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenGL(一) 渲染循环创建窗口">
+<meta property="og:url" content="http://example.com/2021/03/30/OpenGL-window/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="¶OpenGL(一) 渲染循环创建窗口 注：本文仅供自己以及OPENGL初学者共同学习进步，并无实际教学意义，不过会对自己学习中遇到的关键点加上个人解释。应该会对初学者有所帮助，如有错误请指正！ 上次我们已经配置好了glfw + glad环境,接下来就是我们实践使用的时候了。  首先，我们先将要使用的头文件加进来，注意，这里先后顺序不能错： 12#include &lt;glad&#x2F;glad.h&amp;g">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://learnopengl-cn.github.io/img/01/03/hellowindow2.png">
+<meta property="article:published_time" content="2021-03-30T08:49:48.270Z">
+<meta property="article:modified_time" content="2021-03-30T12:57:33.618Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="OPENGL学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://learnopengl-cn.github.io/img/01/03/hellowindow2.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2021/03/30/OpenGL-window/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/XQ.github.io/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/Jveilcoo" target="_blank">
+          <img class="img-circle img-rotate" src="/XQ.github.io/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">天色渐淡</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">EVERYTHING WILL BE OK!</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hunan, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/XQ.github.io/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/XQ.github.io/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/XQ.github.io/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/XQ.github.io/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/XQ.github.io/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Jveilcoo" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/C/">C++</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/OPENGL/">OPENGL</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E6%95%B0%E5%AD%A6/">数学</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E6%AF%8F%E6%97%A5%E6%89%93%E5%8D%A1/">每日打卡</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/XQ.github.io/categories/%E7%AB%9E%E8%B5%9B/">竞赛</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/C-%E5%AD%A6%E4%B9%A0/" rel="tag">C++学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/Eigen/" rel="tag">Eigen</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/Leetcode%E5%91%A8%E8%B5%9B%E5%A4%8D%E7%8E%B0/" rel="tag">Leetcode周赛复现</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/Leetcode%E9%A2%98%E8%A7%A3/" rel="tag">Leetcode题解</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/OPENGL%E5%AD%A6%E4%B9%A0/" rel="tag">OPENGL学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/%E6%A6%82%E5%BF%B5%E7%9F%A5%E8%AF%86/" rel="tag">概念知识</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" rel="tag">环境配置</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/XQ.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" rel="tag">线性代数</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/XQ.github.io/tags/C-%E5%AD%A6%E4%B9%A0/" style="font-size: 13.67px;">C++学习</a> <a href="/XQ.github.io/tags/Eigen/" style="font-size: 13.33px;">Eigen</a> <a href="/XQ.github.io/tags/Leetcode%E5%91%A8%E8%B5%9B%E5%A4%8D%E7%8E%B0/" style="font-size: 13px;">Leetcode周赛复现</a> <a href="/XQ.github.io/tags/Leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 14px;">Leetcode题解</a> <a href="/XQ.github.io/tags/OPENGL%E5%AD%A6%E4%B9%A0/" style="font-size: 13.33px;">OPENGL学习</a> <a href="/XQ.github.io/tags/%E6%A6%82%E5%BF%B5%E7%9F%A5%E8%AF%86/" style="font-size: 13px;">概念知识</a> <a href="/XQ.github.io/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" style="font-size: 13px;">环境配置</a> <a href="/XQ.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" style="font-size: 13.33px;">线性代数</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/XQ.github.io/archives/2021/03/">三月 2021</a><span class="archive-list-count">48</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E6%AF%8F%E6%97%A5%E6%89%93%E5%8D%A1/">每日打卡</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/31/leetcode90/" class="title">Leetcode每日一题 90.子集 II</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-31T14:02:02.973Z" itemprop="datePublished">2021-03-31</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/OPENGL/">OPENGL</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/30/OpenGL-Triangle/" class="title">OpenGL(二) 绘制一个及多个三角形</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-30T12:57:15.591Z" itemprop="datePublished">2021-03-30</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/OPENGL/">OPENGL</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/30/OpenGL-window/" class="title">OpenGL(一) 渲染循环创建窗口</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-30T08:49:48.270Z" itemprop="datePublished">2021-03-30</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E6%AF%8F%E6%97%A5%E6%89%93%E5%8D%A1/">每日打卡</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/30/leetcode74/" class="title">Leetcode每日一题 74.搜索二维矩阵</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-30T05:21:59.002Z" itemprop="datePublished">2021-03-30</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/XQ.github.io/categories/%E6%AF%8F%E6%97%A5%E6%89%93%E5%8D%A1/">每日打卡</a>
+              </p>
+              <p class="item-title">
+                <a href="/XQ.github.io/2021/03/29/leetcode190/" class="title">Leetcode每日一题 190.颠倒二进制位</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-29T03:03:08.181Z" itemprop="datePublished">2021-03-29</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenGL-%E4%B8%80-%E6%B8%B2%E6%9F%93%E5%BE%AA%E7%8E%AF%E5%88%9B%E5%BB%BA%E7%AA%97%E5%8F%A3"><span class="toc-number">1.</span> <span class="toc-text">OpenGL(一) 渲染循环创建窗口</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-OpenGL-window" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OpenGL(一) 渲染循环创建窗口
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/XQ.github.io/2021/03/30/OpenGL-window/" class="article-date">
+	  <time datetime="2021-03-30T08:49:48.270Z" itemprop="datePublished">2021-03-30</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/XQ.github.io/categories/OPENGL/">OPENGL</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/XQ.github.io/tags/OPENGL%E5%AD%A6%E4%B9%A0/" rel="tag">OPENGL学习</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/XQ.github.io/2021/03/30/OpenGL-window/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="OpenGL-一-渲染循环创建窗口"><a class="header-anchor" href="#OpenGL-一-渲染循环创建窗口">¶</a>OpenGL(一) 渲染循环创建窗口</h2>
+<p><kbd><font size=2 color=red>注：本文仅供自己以及OPENGL初学者共同学习进步，并无实际教学意义，不过会对自己学习中遇到的关键点加上个人解释。应该会对初学者有所帮助，如有错误请指正！</font></kbd></p>
+<p>上次我们已经配置好了<a href="openglconf.md">glfw + glad环境</a>,接下来就是我们实践使用的时候了。</p>
+<hr>
+<p>首先，我们先将要使用的头文件加进来，注意，这里先后顺序不能错：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;glad/glad.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GLFW/glfw3.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>然后我们开始进入<kbd>main()</kbd>函数,初始化<kbd>glfw</kbd>,并且声明版本号：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">glfwInit</span>(); <span class="comment">//初始化glfw</span></span><br><span class="line">	<span class="built_in">glfwWindowHint</span>(GLFW_CONTEXT_VERSION_MAJOR, <span class="number">3</span>); <span class="comment">//版本号</span></span><br><span class="line">	<span class="built_in">glfwWindowHint</span>(GLFW_CONTEXT_VERSION_MINOR, <span class="number">3</span>); <span class="comment">//代表glfw3.3</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我这里使用的是3.3版本。<br>
+然后我们用<kbd>glfwCreateWindow()</kbd>函数创建一个窗口对象：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">glfwInit</span>(); <span class="comment">//初始化glfw</span></span><br><span class="line">	<span class="built_in">glfwWindowHint</span>(GLFW_CONTEXT_VERSION_MAJOR, <span class="number">3</span>); <span class="comment">//版本号</span></span><br><span class="line">	<span class="built_in">glfwWindowHint</span>(GLFW_CONTEXT_VERSION_MINOR, <span class="number">3</span>); <span class="comment">//代表glfw3.3</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//创建窗口</span></span><br><span class="line">	GLFWwindow * window = <span class="built_in">glfwCreateWindow</span>(<span class="number">800</span>, <span class="number">600</span>, <span class="string">&quot;LearnOpenGL&quot;</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">	<span class="comment">//判断是否创建成功</span></span><br><span class="line">	<span class="keyword">if</span> (window == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Failed to create GLFW window&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">		<span class="built_in">glfwTerminate</span>();</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="built_in">glfwMakeContextCurrent</span>(window); <span class="comment">//设置当前线程上下文 意思就是在切换下一个状态之前，进行的所有操作都是对 window这个对象进行的</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在源码注释里，<kbd>GLFWwindow</kbd>是&quot;brief Opaque window object&quot;，也就是简易窗口对象的意思。<br>
+<kbd>glfwCreateWindow()</kbd>函数显而易见，第一个参数是宽度，第二个参数是高度，第三个是title，也就是窗口名称，后面两个参数现在用不到。当窗口创建失败时，<kbd>window</kbd>指针会指向NULL，我们可以利用这个来判断窗口是否创建成功。</p>
+<p><kbd>glfwTerminate()</kbd>是释放资源的函数，当一切结束的时候，我们就要用到这个函数。<br>
+<kbd>glfwMakeContextCurrent(window)</kbd>就如注释所说，OPENGL是讲状态的，只要我们不在当前线程设置其他上下文，它就会一直绑定当前设置的<kbd>window</kbd>窗口，之后的所有操作，就都是在这个<kbd>window</kbd>里进行.</p>
+<hr>
+<p>接下来我们初始化<kbd>glad</kbd>:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">glfwInit</span>(); <span class="comment">//初始化glfw</span></span><br><span class="line">	<span class="built_in">glfwWindowHint</span>(GLFW_CONTEXT_VERSION_MAJOR, <span class="number">3</span>); <span class="comment">//版本号</span></span><br><span class="line">	<span class="built_in">glfwWindowHint</span>(GLFW_CONTEXT_VERSION_MINOR, <span class="number">3</span>); <span class="comment">//代表glfw3.3</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//创建窗口</span></span><br><span class="line">	GLFWwindow * window = <span class="built_in">glfwCreateWindow</span>(<span class="number">800</span>, <span class="number">600</span>, <span class="string">&quot;LearnOpenGL&quot;</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">	<span class="comment">//判断是否创建成功</span></span><br><span class="line">	<span class="keyword">if</span> (window == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Failed to create GLFW window&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">		<span class="built_in">glfwTerminate</span>();</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="built_in">glfwMakeContextCurrent</span>(window); <span class="comment">//设置当前线程上下文 意思就是在切换下一个状态之前，进行的所有操作都是对 window这个对象进行的</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">gladLoadGLLoader</span>((GLADloadproc)glfwGetProcAddress))</span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Failed to initialize GLAD&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//开始渲染之前先告诉opengl渲染窗口的尺寸大小，以及坐标</span></span><br><span class="line">	<span class="comment">//注意，opengl坐标范围为-1到1 ,与屏幕坐标之间存 映射关系</span></span><br><span class="line">	<span class="built_in">glViewport</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">800</span>, <span class="number">600</span>); </span><br><span class="line">	<span class="comment">//注册该函数，告诉opengl每次window调整大小时都调用该函数</span></span><br><span class="line">	<span class="built_in">glfwSetFramebufferSizeCallback</span>(window, framebuffer_size_callback); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>glad是用来管理opengl的函数指针的，所以启用opengl任何函数之前需要初始化glad<br>
+<kbd>glViewport()</kbd>是设置视口的，具体作用大概就是设置窗口的起始坐标，以及告诉opengl我们要渲染的窗口大小为800x600.<br>
+<kbd>glfwSetFramebufferSizeCallback()</kbd>目的是为了当我们拖动窗口，造成窗口大小变化时，能够及时改变渲染的窗口尺寸,里面传入了我们自己设置的函数，可以看到函数内;我们在实时更改视口。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">framebuffer_size_callback</span><span class="params">(GLFWwindow * window, <span class="keyword">int</span> width, <span class="keyword">int</span> height)</span> <span class="comment">//随用户调整窗口大小而变化视口大小</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">glViewport</span>(<span class="number">0</span>, <span class="number">0</span>, width, height);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该准备的准备完了，可以开始渲染循环了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (!<span class="built_in">glfwWindowShouldClose</span>(window)) <span class="comment">// 检查glfw是否被要求退出</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">glfwSwapBuffers</span>(window); <span class="comment">//交换前后缓冲</span></span><br><span class="line">	<span class="built_in">glfwPollEvents</span>(); <span class="comment">//监视事件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果跟着前面打没有打错的话，至此一个完整的黑色背景窗口就能出现了。</p>
+<hr>
+<p>来解释一下<kbd>glfwSwapBuffers()</kbd>,因为OPENGL是双缓冲，那么双缓冲的作用是什么呢？假如是单缓冲，由于屏幕上的像素绘制是由左到右，从上到下一个一个绘制的，如果缓冲量过大，那么可能会出现图像闪烁，但是如果是双缓冲，它是由前缓冲全部绘制好，然后再跟后缓冲互换，然后前后工作交替进行，这样子就解决了闪烁问题。所以也能理解这个函数为什么叫这么个名字了吧。</p>
+<p>那么现在我们想给窗口背景改个色，该怎么弄呢，我们需要设置一个颜色缓冲。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glClearColor</span>(<span class="number">0.2f</span>, <span class="number">0.3f</span>, <span class="number">0.3f</span>, <span class="number">1.0f</span>);</span><br><span class="line"><span class="built_in">glClear</span>(GL_COLOR_BUFFER_BIT);</span><br></pre></td></tr></table></figure>
+<p><kbd>glClearColor()</kbd>是设置清空屏幕所使用的颜色，意思就是使用这个函数后，之后每次清屏，默认颜色都是我们这个函数所设置的颜色。然后<kbd>glClear()</kbd>就是清除颜色缓冲，也就是清屏，那么我们为什么每次循环都要<kbd>glClear()</kbd>呢，因为有些人可能认为，我都画上去了，为什么要清除屏幕，再绘制一次呢，因为在渲染循环里，你是一个在不断绘制图像的过程，如果不清屏，那么每次画的图像就会叠加，导致跟我们预想的绘制内容会出现很大差别，比如你只是要画一只鸭子，但你如果不使用<kbd>glClear()</kbd>,那可能就是成千上万只鸭子绘制在同一个地方，内容不断叠加。</p>
+<p>最后我们再加入一个退出事件的函数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">processInput</span><span class="params">(GLFWwindow * window)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">glfwGetKey</span>(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)</span><br><span class="line">		<span class="built_in">glfwSetWindowShouldClose</span>(window, <span class="literal">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到一旦检测到我们按下ESC键，那么就会利用<kbd>glfwSetWindowShouldClose()</kbd>函数，传入true,使window窗口关闭，可以看到我们循环的条件是<kbd>while (!glfwWindowShouldClose(window))</kbd>。</p>
+<p>接下来是完整源码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;glad/glad.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GLFW/glfw3.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">framebuffer_size_callback</span><span class="params">(GLFWwindow * window, <span class="keyword">int</span> width, <span class="keyword">int</span> height)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">processInput</span><span class="params">(GLFWwindow * window)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">glfwInit</span>(); <span class="comment">//初始化glfw</span></span><br><span class="line">	<span class="built_in">glfwWindowHint</span>(GLFW_CONTEXT_VERSION_MAJOR, <span class="number">3</span>); <span class="comment">//版本号</span></span><br><span class="line">	<span class="built_in">glfwWindowHint</span>(GLFW_CONTEXT_VERSION_MINOR, <span class="number">3</span>); <span class="comment">//代表glfw3.3</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//创建窗口</span></span><br><span class="line">	GLFWwindow * window = <span class="built_in">glfwCreateWindow</span>(<span class="number">800</span>, <span class="number">600</span>, <span class="string">&quot;LearnOpenGL&quot;</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">	<span class="comment">//判断是否创建成功</span></span><br><span class="line">	<span class="keyword">if</span> (window == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Failed to create GLFW window&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">		<span class="built_in">glfwTerminate</span>();</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="built_in">glfwMakeContextCurrent</span>(window); <span class="comment">//设置当前线程上下文 意思就是在切换下一个状态之前，进行的所有操作都是对 window这个对象进行的</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">gladLoadGLLoader</span>((GLADloadproc)glfwGetProcAddress))</span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Failed to initialize GLAD&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//开始渲染之前先告诉opengl渲染窗口的尺寸大小，以及坐标</span></span><br><span class="line">	<span class="comment">//注意，opengl坐标范围为-1到1 ,与屏幕坐标之间存 映射关系</span></span><br><span class="line">	<span class="built_in">glViewport</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">800</span>, <span class="number">600</span>); </span><br><span class="line">	<span class="comment">//注册该函数，告诉opengl每次window调整大小时都调用该函数</span></span><br><span class="line">	<span class="built_in">glfwSetFramebufferSizeCallback</span>(window, framebuffer_size_callback); </span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (!<span class="built_in">glfwWindowShouldClose</span>(window)) <span class="comment">// 检查glfw是否被要求退出</span></span><br><span class="line">	&#123;</span><br><span class="line">        <span class="built_in">processInput</span>(window);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">glClearColor</span>(<span class="number">0.2f</span>, <span class="number">0.3f</span>, <span class="number">0.3f</span>, <span class="number">1.0f</span>);</span><br><span class="line">		<span class="built_in">glClear</span>(GL_COLOR_BUFFER_BIT);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">glfwSwapBuffers</span>(window); <span class="comment">//交换前后缓冲</span></span><br><span class="line">		<span class="built_in">glfwPollEvents</span>(); <span class="comment">//监视事件</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//释放内存</span></span><br><span class="line">	<span class="built_in">glfwTerminate</span>(); </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">framebuffer_size_callback</span><span class="params">(GLFWwindow * window, <span class="keyword">int</span> width, <span class="keyword">int</span> height)</span> <span class="comment">//随用户调整窗口大小而变化视口大小</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">glViewport</span>(<span class="number">0</span>, <span class="number">0</span>, width, height);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">processInput</span><span class="params">(GLFWwindow * window)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">glfwGetKey</span>(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)</span><br><span class="line">		<span class="built_in">glfwSetWindowShouldClose</span>(window, <span class="literal">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<img src="https://learnopengl-cn.github.io/img/01/03/hellowindow2.png">  
+<p>这样，一个基本完整的窗口就完成啦。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2021/03/30/OpenGL-window/" title="OpenGL(一) 渲染循环创建窗口" target="_blank" rel="external">http://example.com/2021/03/30/OpenGL-window/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/Jveilcoo" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/XQ.github.io/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/Jveilcoo" target="_blank"><span class="text-dark">天色渐淡</span><small class="ml-1x">EVERYTHING WILL BE OK!</small></a></h3>
+        <div>和相同的人，一起去观赏不同的远方</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/XQ.github.io/2021/03/30/OpenGL-Triangle/" title="OpenGL(二) 绘制一个及多个三角形"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/XQ.github.io/2021/03/30/leetcode74/" title="Leetcode每日一题 74.搜索二维矩阵"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/XQ.github.io/images/donate/zhifubao.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/XQ.github.io/images/donate/weixin.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Jveilcoo" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/XQ.github.io/js/plugin.min.js"></script>
+
+
+<script src="/XQ.github.io/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/XQ.github.io/',
+        CONTENT_URL: '/XQ.github.io/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/XQ.github.io/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
